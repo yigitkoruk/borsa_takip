@@ -28,7 +28,7 @@ if (isset($_POST["ekle"])) {
     }
 
     if (empty($satisFiyati)) {
-        $satisFiyati_Hata ='<p style="font-size: 13px; color: red;">Lütfen satış fiyatı giriniz!</p>';
+        $satisFiyati_Hata ='<p style="font-size: 13px; color: red;">Lütfen güncel fiyat giriniz!</p>';
     }
 
     if (empty($adet)) {
