@@ -42,7 +42,6 @@ if (isset($_POST["sat"])) {
 }
 
 if (isset($_POST["duzenle"])) {
-
 }
 
 ?>
@@ -54,122 +53,27 @@ if (isset($_POST["duzenle"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Borsa Takip Sayfası</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 0;
-}
-
-h1, h2 {
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #fff;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-button {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 5px;
-}
-
-.button {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-input[type="text"], input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 15px 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-input[type="text"]:focus, input[type="number"]:focus {
-    outline: none;
-    border-color: #4caf50;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <h1></h1>
     <form id="borsaForm" method="POST">
         <label for="hisseAdi">Hisse Adı:</label>
-        <input type="text" id="hisseAdi"  name="hisseAdi"><br><br>
+        <input type="text" id="hisseAdi" name="hisseAdi"><br><br>
 
         <label for="alisMaliyeti">Alış Maliyeti:</label>
-        <input type="number" id="alisMaliyeti"   name="alisMaliyeti"><br><br>
+        <input type="number" id="alisMaliyeti" name="alisMaliyeti"><br><br>
 
-        <label for="satisFiyati">Satış Fiyatı:</label>
-        <input type="number" id="satisFiyati"  name="satisFiyati"><br><br>
+        <label for="satisFiyati">Güncel Fiyat:</label>
+        <input type="number" id="satisFiyati" name="satisFiyati"><br><br>
 
         <label for="adet">Adet:</label>
-        <input type="number" id="adet"  name="adet"><br><br>
+        <input type="number" id="adet" name="adet"><br><br>
 
         <button type="button" onclick="ekle()">Ekle</button>
         <input type="submit" name="ekle">
     </form>
-
-    <h2>Alış Satış İşlemleri</h2>
-    <table id="borsaTablosu">
-        <tr>
-            <th>Hisse Adı</th>
-            <th>Alış Maliyeti</th>
-            <th>Satış Fiyatı</th>
-            <th>Adet</th>
-            <th>Kar/Zarar</th>
-            <th>İşlemler</th>
-        </tr>
-    </table>
 
     <h2>Aylık Kar/Zarar Tablosu</h2>
     <table id="aylikKarZararTablosu">
@@ -180,6 +84,7 @@ input[type="text"]:focus, input[type="number"]:focus {
     </table>
 
     <table>
+        <h2>Alış Satış İşlemleri</h2>
         <thead>
             <tr>
                 <th>Hisse Adı</th>
@@ -192,20 +97,20 @@ input[type="text"]:focus, input[type="number"]:focus {
         </thead>
         <tbody>
             <?php foreach ($list as $item) : ?>
-            <tr>
-                <td><?= $item["hisse_adi"] ?? "" ?></td>
-                <td><?= $item["alis_maliyeti"] ?? "" ?></td>
-                <td><?= $item["guncel_fiyat"] ?? "" ?></td>
-                <td><?= $item["adet"] ?? "" ?></td>
-                <td><?= $item["kar_zarar"] ?? "" ?></td>
-                <td>
-                    <form method="POST">
-                        <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
-                        <input type="submit" value="Düzenle" name="duzenle" class="button">
-                        <input type="submit" value="Sat" name="sat" class="button">
-                    </form>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= $item["hisse_adi"] ?? "" ?></td>
+                    <td><?= $item["alis_maliyeti"] ?? "" ?></td>
+                    <td><?= $item["guncel_fiyat"] ?? "" ?></td>
+                    <td><?= $item["adet"] ?? "" ?></td>
+                    <td><?= $item["kar_zarar"] ?? "" ?></td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
+                            <input type="submit" value="Düzenle" name="duzenle" class="button">
+                            <input type="submit" value="Sat" name="sat" class="button">
+                        </form>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -214,57 +119,59 @@ input[type="text"]:focus, input[type="number"]:focus {
         let borsaVerileri = [];
         let duzenleIndex = null;
 
-        window.onload = function () {
+        window.onload = function() {
             borsaVerileri = JSON.parse(localStorage.getItem("borsaVerileri")) || [];
             guncelleTablolar();
         };
 
         function ekle() {
-    let hisseAdi = document.getElementById("hisseAdi").value;
-    let alisMaliyeti = parseFloat(document.getElementById("alisMaliyeti").value);
-    let satisFiyati = parseFloat(document.getElementById("satisFiyati").value);
-    let adet = parseInt(document.getElementById("adet").value);
-    let karZarar = (satisFiyati - alisMaliyeti) * adet;
-    let ay = new Date().toLocaleString('default', { month: 'long' });
-
-    if (duzenleIndex !== null) {
-        borsaVerileri[duzenleIndex] = {
-            hisseAdi: hisseAdi,
-            alisMaliyeti: alisMaliyeti,
-            satisFiyati: satisFiyati,
-            adet: adet,
-            karZarar: karZarar,
-            ay: ay
-        };
-        duzenleIndex = null;
-    } else {
-        // Düzenleme yapılmiyorsa var olan bir veriyi güncelleme
-        let existingIndex = borsaVerileri.findIndex(veri => veri.hisseAdi === hisseAdi);
-        if (existingIndex !== -1) {
-            borsaVerileri[existingIndex] = {
-                hisseAdi: hisseAdi,
-                alisMaliyeti: alisMaliyeti,
-                satisFiyati: satisFiyati,
-                adet: adet,
-                karZarar: karZarar,
-                ay: ay
-            };
-        } else {
-            borsaVerileri.push({
-                hisseAdi: hisseAdi,
-                alisMaliyeti: alisMaliyeti,
-                satisFiyati: satisFiyati,
-                adet: adet,
-                karZarar: karZarar,
-                ay: ay
+            let hisseAdi = document.getElementById("hisseAdi").value;
+            let alisMaliyeti = parseFloat(document.getElementById("alisMaliyeti").value);
+            let satisFiyati = parseFloat(document.getElementById("satisFiyati").value);
+            let adet = parseInt(document.getElementById("adet").value);
+            let karZarar = (satisFiyati - alisMaliyeti) * adet;
+            let ay = new Date().toLocaleString('default', {
+                month: 'long'
             });
-        }
-    }
 
-    localStorage.setItem("borsaVerileri", JSON.stringify(borsaVerileri));
-    guncelleTablolar();
-    document.getElementById("borsaForm").reset();
-}
+            if (duzenleIndex !== null) {
+                borsaVerileri[duzenleIndex] = {
+                    hisseAdi: hisseAdi,
+                    alisMaliyeti: alisMaliyeti,
+                    satisFiyati: satisFiyati,
+                    adet: adet,
+                    karZarar: karZarar,
+                    ay: ay
+                };
+                duzenleIndex = null;
+            } else {
+                // Düzenleme yapılmiyorsa var olan bir veriyi güncelleme
+                let existingIndex = borsaVerileri.findIndex(veri => veri.hisseAdi === hisseAdi);
+                if (existingIndex !== -1) {
+                    borsaVerileri[existingIndex] = {
+                        hisseAdi: hisseAdi,
+                        alisMaliyeti: alisMaliyeti,
+                        satisFiyati: satisFiyati,
+                        adet: adet,
+                        karZarar: karZarar,
+                        ay: ay
+                    };
+                } else {
+                    borsaVerileri.push({
+                        hisseAdi: hisseAdi,
+                        alisMaliyeti: alisMaliyeti,
+                        satisFiyati: satisFiyati,
+                        adet: adet,
+                        karZarar: karZarar,
+                        ay: ay
+                    });
+                }
+            }
+
+            localStorage.setItem("borsaVerileri", JSON.stringify(borsaVerileri));
+            guncelleTablolar();
+            document.getElementById("borsaForm").reset();
+        }
 
         function duzenle(index) {
             duzenleIndex = index;
@@ -289,7 +196,7 @@ input[type="text"]:focus, input[type="number"]:focus {
 
             let borsaTablosu = document.getElementById("borsaTablosu");
             let aylikKarZararTablosu = document.getElementById("aylikKarZararTablosu");
-            borsaVerileri.forEach(function (hisse, index) {
+            borsaVerileri.forEach(function(hisse, index) {
                 let row = borsaTablosu.insertRow();
                 row.innerHTML = `<td>${hisse.hisseAdi}</td><td>${hisse.alisMaliyeti}</td><td>${hisse.satisFiyati}</td><td>${hisse.adet}</td><td>${hisse.karZarar}</td><td><button onclick="duzenle(${index})">Düzenle</button> <button onclick="sil(${index})">Sil</button></td>`;
 
