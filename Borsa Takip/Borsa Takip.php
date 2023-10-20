@@ -18,18 +18,37 @@ if (isset($_POST["ekle"])) {
     $alisMaliyeti = $_POST["alisMaliyeti"];
     $satisFiyati = $_POST["satisFiyati"];
     $adet = $_POST["adet"];
-    $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
-    $tarih = date("F");
 
-    $sql = "INSERT INTO hisseler (hisse_adi, alis_maliyeti, guncel_fiyat, adet, kar_zarar, tarih) VALUES ('$hisseAdi', '$alisMaliyeti', '$satisFiyati', '$adet', '$karZarar', '$tarih')";
-
-    if ($connect->query($sql) === TRUE) {
-        echo "Veri başarıyla eklendi.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $connect->error;
+    if (empty($hisseAdi)) {
+        $hisseAdi_Hata = '<p style="font-size: 13px; color: red;">Lütfen hisse adı giriniz!</p>';
     }
-    $connect->close();
-    header("Location: Borsa Takip.php");
+
+    if (empty($alisMaliyeti)) {
+        $alisMaliyeti_Hata = '<p style="font-size: 13px; color: red;">Lütfen hisse maliyeti giriniz!</p>';
+    }
+
+    if (empty($satisFiyati)) {
+        $satisFiyati_Hata ='<p style="font-size: 13px; color: red;">Lütfen satış fiyatı giriniz!</p>';
+    }
+
+    if (empty($adet)) {
+        $Adet_Hata = '<p style="font-size: 13px; color: red;">Lütfen adet giriniz!</p>';
+    }
+
+    if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
+        $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
+        $tarih = date("F");
+
+        $sql = "INSERT INTO hisseler (hisse_adi, alis_maliyeti, guncel_fiyat, adet, kar_zarar, tarih) VALUES ('$hisseAdi', '$alisMaliyeti', '$satisFiyati', '$adet', '$karZarar', '$tarih')";
+
+        if ($connect->query($sql) === TRUE) {
+            echo "Veri başarıyla eklendi.";
+        } else {
+            echo "Error: " . $sql . "<br>" . $connect->error;
+        }
+        $connect->close();
+        header("Location: Borsa Takip.php");
+    }
 }
 
 if (isset($_POST["sat"])) {
@@ -44,6 +63,7 @@ if (isset($_POST["sat"])) {
 if (isset($_POST["duzenle"])) {
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -57,22 +77,25 @@ if (isset($_POST["duzenle"])) {
 </head>
 
 <body>
-    <h1></h1>
     <form id="borsaForm" method="POST">
         <label for="hisseAdi">Hisse Adı:</label>
-        <input type="text" id="hisseAdi" name="hisseAdi"><br><br>
+        <input type="text" id="hisseAdi" name="hisseAdi">
+        <?= $hisseAdi_Hata ?? "" ?><br><br>
 
         <label for="alisMaliyeti">Alış Maliyeti:</label>
-        <input type="number" id="alisMaliyeti" name="alisMaliyeti"><br><br>
+        <input type="number" id="alisMaliyeti" name="alisMaliyeti">
+        <?= $alisMaliyeti_Hata ?? "" ?><br><br>
 
         <label for="satisFiyati">Güncel Fiyat:</label>
-        <input type="number" id="satisFiyati" name="satisFiyati"><br><br>
+        <input type="number" id="satisFiyati" name="satisFiyati">
+        <?= $satisFiyati_Hata ?? "" ?><br><br>
 
         <label for="adet">Adet:</label>
-        <input type="number" id="adet" name="adet"><br><br>
+        <input type="number" id="adet" name="adet">
+        <?= $Adet_Hata ?? "" ?><br><br>
 
         <button type="button" onclick="ekle()">Ekle</button>
-        <input type="submit" name="ekle">
+        <input type="submit" name="ekle" value="Submit">
     </form>
 
     <h2>Aylık Kar/Zarar Tablosu</h2>
