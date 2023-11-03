@@ -73,42 +73,136 @@ if (isset($_POST["duzenle"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Borsa Takip Sayfası</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <form id="borsaForm" method="POST">
-        <label for="hisseAdi">Hisse Adı:</label>
-        <input type="text" id="hisseAdi" name="hisseAdi">
-        <?= $hisseAdi_Hata ?? "" ?><br><br>
-
-        <label for="alisMaliyeti">Alış Maliyeti:</label>
-        <input type="number" id="alisMaliyeti" name="alisMaliyeti">
-        <?= $alisMaliyeti_Hata ?? "" ?><br><br>
-
-        <label for="satisFiyati">Güncel Fiyat:</label>
-        <input type="number" id="satisFiyati" name="satisFiyati">
-        <?= $satisFiyati_Hata ?? "" ?><br><br>
-
-        <label for="adet">Adet:</label>
-        <input type="number" id="adet" name="adet">
-        <?= $Adet_Hata ?? "" ?><br><br>
-
-        <button type="button" onclick="ekle()">Ekle</button>
-        <input type="submit" name="ekle" value="Submit">
-    </form>
-
-    <h2>Aylık Kar/Zarar Tablosu</h2>
-    <table id="aylikKarZararTablosu">
-        <tr>
-            <th>Ay</th>
-            <th>Kar/Zarar</th>
-        </tr>
-    </table>
-
-    <table>
+    <div class="container">
+        <h1>Borsa Takip Sayfası</h1>
+        <form id="borsaForm">
+            <label for="hisseAdi">Hisse Adı:</label>
+            <input type="text" id="hisseAdi" required><br><br>
+            <label for="alisMaliyeti">Alış Maliyeti:</label>
+            <input type="number" id="alisMaliyeti" required><br><br>
+            <label for="satisFiyati">Satış Fiyatı:</label>
+            <input type="number" id="satisFiyati" required><br><br>
+            <label for="adet">Adet:</label>
+            <input type="number" id="adet" required><br><br>
+            <button type="button" onclick="ekle()">Ekle</button>
+        </form>
         <h2>Alış Satış İşlemleri</h2>
-        <thead>
+        <table id="borsaTablosu">
             <tr>
                 <th>Hisse Adı</th>
                 <th>Alış Maliyeti</th>
@@ -117,32 +211,46 @@ if (isset($_POST["duzenle"])) {
                 <th>Kar/Zarar</th>
                 <th>İşlemler</th>
             </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($list as $item) : ?>
-                <tr>
-                    <td><?= $item["hisse_adi"] ?? "" ?></td>
-                    <td><?= $item["alis_maliyeti"] ?? "" ?></td>
-                    <td><?= $item["guncel_fiyat"] ?? "" ?></td>
-                    <td><?= $item["adet"] ?? "" ?></td>
-                    <td><?= $item["kar_zarar"] ?? "" ?></td>
-                    <td>
-                        <form method="POST">
-                            <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
-                            <input type="submit" value="Düzenle" name="duzenle" class="button">
-                            <input type="submit" value="Sat" name="sat" class="button">
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        </table>
+
+        <div id="detayModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="kapatDetayModal()">&times;</span>
+                <h2>Detaylar</h2>
+                <div id="detayIcerik"></div>
+            </div>
+        </div>
+
+        <h2>Aylık Kar/Zarar Tablosu</h2>
+        <table id="aylikKarZararTablosu">
+            <tr>
+                <th>Ay</th>
+                <th>Kar/Zarar</th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Düzenle</h2>
+            <label for="hisseAdiModal">Hisse Adı:</label>
+            <input type="text" id="hisseAdiModal" required><br><br>
+            <label for="alisMaliyetiModal">Alış Maliyeti:</label>
+            <input type="number" id="alisMaliyetiModal" required><br><br>
+            <label for="satisFiyatiModal">Satış Fiyatı:</label>
+            <input type="number" id="satisFiyatiModal" required><br><br>
+            <label for="adetModal">Adet:</label>
+            <input type="number" id="adetModal" required><br><br>
+            <button type="button" onclick="kaydet()">Kaydet</button>
+        </div>
+    </div>
 
     <script>
         let borsaVerileri = [];
         let duzenleIndex = null;
 
-        window.onload = function() {
+        window.onload = function () {
             borsaVerileri = JSON.parse(localStorage.getItem("borsaVerileri")) || [];
             guncelleTablolar();
         };
@@ -153,9 +261,7 @@ if (isset($_POST["duzenle"])) {
             let satisFiyati = parseFloat(document.getElementById("satisFiyati").value);
             let adet = parseInt(document.getElementById("adet").value);
             let karZarar = (satisFiyati - alisMaliyeti) * adet;
-            let ay = new Date().toLocaleString('default', {
-                month: 'long'
-            });
+            let ay = new Date().toLocaleString('default', { month: 'long' });
 
             if (duzenleIndex !== null) {
                 borsaVerileri[duzenleIndex] = {
@@ -168,27 +274,14 @@ if (isset($_POST["duzenle"])) {
                 };
                 duzenleIndex = null;
             } else {
-                // Düzenleme yapılmiyorsa var olan bir veriyi güncelleme
-                let existingIndex = borsaVerileri.findIndex(veri => veri.hisseAdi === hisseAdi);
-                if (existingIndex !== -1) {
-                    borsaVerileri[existingIndex] = {
-                        hisseAdi: hisseAdi,
-                        alisMaliyeti: alisMaliyeti,
-                        satisFiyati: satisFiyati,
-                        adet: adet,
-                        karZarar: karZarar,
-                        ay: ay
-                    };
-                } else {
-                    borsaVerileri.push({
-                        hisseAdi: hisseAdi,
-                        alisMaliyeti: alisMaliyeti,
-                        satisFiyati: satisFiyati,
-                        adet: adet,
-                        karZarar: karZarar,
-                        ay: ay
-                    });
-                }
+                borsaVerileri.push({
+                    hisseAdi: hisseAdi,
+                    alisMaliyeti: alisMaliyeti,
+                    satisFiyati: satisFiyati,
+                    adet: adet,
+                    karZarar: karZarar,
+                    ay: ay
+                });
             }
 
             localStorage.setItem("borsaVerileri", JSON.stringify(borsaVerileri));
@@ -212,31 +305,34 @@ if (isset($_POST["duzenle"])) {
         }
 
         function guncelleTablolar() {
-            document.getElementById("borsaTablosu").innerHTML = "<tr><th>Hisse Adı</th><th>Alış Maliyeti</th><th>Satış Fiyatı</th><th>Adet</th><th>Kar/Zarar</th><th>İşlemler</th></tr>";
-            document.getElementById("aylikKarZararTablosu").innerHTML = "<tr><th>Ay</th><th>Kar/Zarar</th></tr>";
+            let borsaTablosu = document.getElementById("borsaTablosu");
+            let aylikKarZararTablosu = document.getElementById("aylikKarZararTablosu");
+            borsaTablosu.innerHTML = "<tr><th>Hisse Adı</th><th>Alış Maliyeti</th><th>Satış Fiyatı</th><th>Adet</th><th>Kar/Zarar</th><th>İşlemler</th></tr>";
+            aylikKarZararTablosu.innerHTML = "<tr><th>Ay</th><th>Kar/Zarar</th></tr>";
 
             let toplamKarZarar = {};
 
-            let borsaTablosu = document.getElementById("borsaTablosu");
-            let aylikKarZararTablosu = document.getElementById("aylikKarZararTablosu");
-            borsaVerileri.forEach(function(hisse, index) {
+            borsaVerileri.forEach(function (hisse, index) {
                 let row = borsaTablosu.insertRow();
-                row.innerHTML = `<td>${hisse.hisseAdi}</td><td>${hisse.alisMaliyeti}</td><td>${hisse.satisFiyati}</td><td>${hisse.adet}</td><td>${hisse.karZarar}</td><td><button onclick="duzenle(${index})">Düzenle</button> <button onclick="sil(${index})">Sil</button></td>`;
+                row.innerHTML = `<td>${hisse.hisseAdi}</td><td>${hisse.alisMaliyeti}</td><td>${hisse.satisFiyati}</td><td>${hisse.adet}</td><td>${hisse.karZarar}</td><td><button onclick="duzenle(${index})">Düzenle</button> <button onclick="sil(${index})">Sil</button> <button onclick="detay(${index})">Detay</button></td>`;
+
+
 
                 let aylar = aylikKarZararTablosu.getElementsByTagName("tr");
-                let found = false;
+                let bulundu = false;
+
                 for (let i = 1; i < aylar.length; i++) {
                     let ayAdi = aylar[i].getElementsByTagName("td")[0].innerText;
                     if (ayAdi === hisse.ay) {
                         let mevcutKarZarar = parseInt(aylar[i].getElementsByTagName("td")[1].innerText);
                         mevcutKarZarar += hisse.karZarar;
                         aylar[i].getElementsByTagName("td")[1].innerText = mevcutKarZarar;
-                        found = true;
+                        bulundu = true;
                         break;
                     }
                 }
 
-                if (!found) {
+                if (!bulundu) {
                     let aylikKarZararRow = aylikKarZararTablosu.insertRow();
                     aylikKarZararRow.innerHTML = `<td>${hisse.ay}</td><td>${hisse.karZarar}</td>`;
                 }
@@ -244,11 +340,85 @@ if (isset($_POST["duzenle"])) {
                 if (!toplamKarZarar[hisse.ay]) {
                     toplamKarZarar[hisse.ay] = 0;
                 }
+
                 toplamKarZarar[hisse.ay] += hisse.karZarar;
             });
 
             let toplamKarZararRow = aylikKarZararTablosu.insertRow();
             toplamKarZararRow.innerHTML = `<td>Toplam</td><td>${Object.values(toplamKarZarar).reduce((a, b) => a + b, 0)}</td>`;
+        }
+
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
+
+        function duzenle(index) {
+            // Düzenleme butonuna basıldığında modalı göster
+            modal.style.display = "block";
+
+            // Seçili hissenin verilerini modal içine yerleştir
+            let seciliHisse = borsaVerileri[index];
+            document.getElementById("hisseAdiModal").value = seciliHisse.hisseAdi;
+            document.getElementById("alisMaliyetiModal").value = seciliHisse.alisMaliyeti;
+            document.getElementById("satisFiyatiModal").value = seciliHisse.satisFiyati;
+            document.getElementById("adetModal").value = seciliHisse.adet;
+
+            // Modal üzerindeki kaydet (save) butonuna tıklandığında yapılacak işlem
+            window.kaydet = function () {
+                // Düzenlenen verileri al
+                let hisseAdi = document.getElementById("hisseAdiModal").value;
+                let alisMaliyeti = parseFloat(document.getElementById("alisMaliyetiModal").value);
+                let satisFiyati = parseFloat(document.getElementById("satisFiyatiModal").value);
+                let adet = parseInt(document.getElementById("adetModal").value);
+                let karZarar = (satisFiyati - alisMaliyeti) * adet;
+                let ay = new Date().toLocaleString('default', { month: 'long' });
+
+                // Düzenleme yapılan veriyi güncelle
+                borsaVerileri[index] = {
+                    hisseAdi: hisseAdi,
+                    alisMaliyeti: alisMaliyeti,
+                    satisFiyati: satisFiyati,
+                    adet: adet,
+                    karZarar: karZarar,
+                    ay: ay
+                };
+
+                // Local storage ve tabloları güncelle
+                localStorage.setItem("borsaVerileri", JSON.stringify(borsaVerileri));
+                guncelleTablolar();
+
+                // Modalı gizle
+                modal.style.display = "none";
+            }
+        }
+
+        // Modalın üstündeki "x" butonuna basıldığında modalı gizle
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Modal dışına tıklandığında modalı gizle
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function detay(index) {
+        // Detay butonuna basıldığında modalı göster
+        let seciliHisse = borsaVerileri[index];
+        let detayIcerik = `<p><strong>Hisse Adı:</strong> ${seciliHisse.hisseAdi}</p>`;
+        detayIcerik += `<p><strong>Alış Maliyeti:</strong> ${seciliHisse.alisMaliyeti}</p>`;
+        detayIcerik += `<p><strong>Satış Fiyatı:</strong> ${seciliHisse.satisFiyati}</p>`;
+        detayIcerik += `<p><strong>Adet:</strong> ${seciliHisse.adet}</p>`;
+        detayIcerik += `<p><strong>Kar/Zarar:</strong> ${seciliHisse.karZarar}</p>`;
+        detayIcerik += `<p><strong>Ay:</strong> ${seciliHisse.ay}</p>`;
+
+        document.getElementById("detayIcerik").innerHTML = detayIcerik;
+        document.getElementById("detayModal").style.display = "block";
+        }
+
+        function kapatDetayModal() {
+        document.getElementById("detayModal").style.display = "none";
         }
     </script>
 </body>
