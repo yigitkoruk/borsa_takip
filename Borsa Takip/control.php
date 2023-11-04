@@ -39,7 +39,7 @@ if (isset($_POST["ekle"])) {
         $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
         $tarih = date("F");
 
-        $sql = "INSERT INTO hisseler (hisse_adi, alis_maliyeti, guncel_fiyat, adet, kar_zarar, tarih) VALUES ('$hisseAdi', '$alisMaliyeti', '$satisFiyati', '$adet', '$karZarar', '$tarih')";
+        $sql = "INSERT INTO hisseler (hisse_adi, alis_maliyeti, guncel_fiyat, adet, kar_zarar) VALUES ('$hisseAdi', $alisMaliyeti, $satisFiyati, $adet, $karZarar)";
 
         if ($connect->query($sql) === TRUE) {
             echo "Veri başarıyla eklendi.";
@@ -47,7 +47,7 @@ if (isset($_POST["ekle"])) {
             echo "Error: " . $sql . "<br>" . $connect->error;
         }
         $connect->close();
-        header("Location: Borsa Takip.php");
+        header("Location: index.php");
     }
 }
 
@@ -57,5 +57,5 @@ if (isset($_POST["sat"])) {
 
     $updateSql = "UPDATE hisseler SET islem_durumu = $false WHERE id = $id";
     $connect->query($updateSql);
-    header("Location: Borsa Takip.php");
+    header("Location: index.php");
 }
