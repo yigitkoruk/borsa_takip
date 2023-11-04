@@ -59,3 +59,6 @@ if (isset($_POST["sat"])) {
     $connect->query($updateSql);
     header("Location: index.php");
 }
+
+
+
