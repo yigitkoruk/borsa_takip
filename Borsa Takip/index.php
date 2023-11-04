@@ -13,17 +13,27 @@
 <body>
     <div class="container">
         <h1>Borsa Takip Sayfası</h1>
-        <form id="borsaForm">
+        <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" required><br><br>
+            <input type="text" id="hisseAdi" name="hisseAdi">
+            <?= $hisseAdi_Hata ?? "" ?><br><br>
+
             <label for="alisMaliyeti">Alış Maliyeti:</label>
-            <input type="number" id="alisMaliyeti" required><br><br>
-            <label for="satisFiyati">Satış Fiyatı:</label>
-            <input type="number" id="satisFiyati" required><br><br>
+            <input type="number" id="alisMaliyeti" name="alisMaliyeti">
+            <?= $alisMaliyeti_Hata ?? "" ?><br><br>
+
+            <label for="satisFiyati">Güncel Fiyat:</label>
+            <input type="number" id="satisFiyati" name="satisFiyati">
+            <?= $satisFiyati_Hata ?? "" ?><br><br>
+
             <label for="adet">Adet:</label>
-            <input type="number" id="adet" required><br><br>
-            <button type="button" onclick="ekle()">Ekle</button>
+            <input type="number" id="adet" name="adet">
+            <?= $Adet_Hata ?? "" ?><br><br>
+
+            <!--<button type="button" onclick="ekle()">Ekle</button>-->
+            <input type="submit" name="ekle" value="Ekle">
         </form>
+
         <h2>Alış Satış İşlemleri</h2>
         <table id="borsaTablosu">
             <tr>
