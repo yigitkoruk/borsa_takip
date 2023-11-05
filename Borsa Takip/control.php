@@ -50,15 +50,3 @@ if (isset($_POST["ekle"])) {
         header("Location: index.php");
     }
 }
-
-if (isset($_POST["sat"])) {
-    $id = $_POST["hidden"];
-    $false = "false";
-
-    $updateSql = "UPDATE hisseler SET islem_durumu = $false WHERE id = $id";
-    $connect->query($updateSql);
-    header("Location: index.php");
-}
-
-
-

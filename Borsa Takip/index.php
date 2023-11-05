@@ -54,6 +54,12 @@
                         <td><?= $item["adet"] ?? "" ?></td>
                         <td><?= $item["kar_zarar"] ?? "" ?></td>
                         <td>
+                            <form method="POST">
+                                <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
+                                <input type="submit" value="Düzenle" name="duzenle" class="button">
+                                <input type="submit" value="Detay" name="detay" class="button">
+                                <input type="submit" value="Sat" name="sat" class="button">
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
