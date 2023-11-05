@@ -30,20 +30,40 @@
             <input type="number" id="adet" name="adet">
             <?= $Adet_Hata ?? "" ?><br><br>
 
-            <!--<button type="button" onclick="ekle()">Ekle</button>-->
             <input type="submit" name="ekle" value="Ekle">
         </form>
 
-        <h2>Alış Satış İşlemleri</h2>
-        <table id="borsaTablosu">
-            <tr>
-                <th>Hisse Adı</th>
-                <th>Alış Maliyeti</th>
-                <th>Satış Fiyatı</th>
-                <th>Adet</th>
-                <th>Kar/Zarar</th>
-                <th>İşlemler</th>
-            </tr>
+        <table>
+            <h2>Alış Satış İşlemleri</h2>
+            <thead>
+                <tr>
+                    <th>Hisse Adı</th>
+                    <th>Alış Maliyeti</th>
+                    <th>Satış Fiyatı</th>
+                    <th>Adet</th>
+                    <th>Kar/Zarar</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($list as $item) : ?>
+                    <tr>
+                        <td><?= $item["hisse_adi"] ?? "" ?></td>
+                        <td><?= $item["alis_maliyeti"] ?? "" ?></td>
+                        <td><?= $item["guncel_fiyat"] ?? "" ?></td>
+                        <td><?= $item["adet"] ?? "" ?></td>
+                        <td><?= $item["kar_zarar"] ?? "" ?></td>
+                        <td>
+                            <form method="POST">
+                                <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
+                                <input type="submit" value="Düzenle" name="duzenle" class="button">
+                                <input type="submit" value="Detay" name="detay" class="button">
+                                <input type="submit" value="Sat" name="sat" class="button">
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
 
         <div id="detayModal" class="modal">
@@ -59,6 +79,10 @@
             <tr>
                 <th>Ay</th>
                 <th>Kar/Zarar</th>
+            </tr>
+            <tr>
+               <td></td>
+               <td><?= $aylıkKarZarar; ?></td>
             </tr>
         </table>
     </div>
