@@ -13,6 +13,11 @@ if ($connect->connect_error) {
 $sql = "SELECT * FROM  hisseler WHERE islem_durumu = true";
 $list = $connect->query($sql);
 
+$aylıkKarZarar = 0;
+foreach ($list as $item) {
+    $aylıkKarZarar += $item["kar_zarar"];
+}
+
 if (isset($_POST["ekle"])) {
     $hisseAdi = $_POST["hisseAdi"];
     $alisMaliyeti = $_POST["alisMaliyeti"];

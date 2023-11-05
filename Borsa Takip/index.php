@@ -80,6 +80,10 @@
                 <th>Ay</th>
                 <th>Kar/Zarar</th>
             </tr>
+            <tr>
+               <td></td>
+               <td><?= $aylıkKarZarar; ?></td>
+            </tr>
         </table>
     </div>
 
