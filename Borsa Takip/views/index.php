@@ -13,23 +13,23 @@
 
 <body>
     <div class="container">
-        <h1>Borsa Takip Sayfası</h1>
+        <h1 style="text-align: center;">Borsa Takip Sayfası</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
             <input type="text" id="hisseAdi" name="hisseAdi" >
-            <?= $hisseAdi_Hata ?? "" ?><br><br>
+            <?= $hisseAdi_Hata ?? "" ?><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
             <input type="number" id="alisMaliyeti" name="alisMaliyeti">
-            <?= $alisMaliyeti_Hata ?? "" ?><br><br>
+            <?= $alisMaliyeti_Hata ?? "" ?><br>
 
             <label for="satisFiyati">Güncel Fiyat:</label>
             <input type="number" id="satisFiyati" name="satisFiyati">
-            <?= $satisFiyati_Hata ?? "" ?><br><br>
+            <?= $satisFiyati_Hata ?? "" ?><br>
 
             <label for="adet">Adet:</label>
             <input type="number" id="adet" name="adet">
-            <?= $Adet_Hata ?? "" ?><br><br>
+            <?= $Adet_Hata ?? "" ?><br>
 
             <input type="submit" name="ekle" value="Ekle">
         </form>
