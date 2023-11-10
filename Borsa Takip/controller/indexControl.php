@@ -1,14 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "borsa_takip";
-
-$connect = new mysqli($host, $user, $password, $database);
-
-if ($connect->connect_error) {
-    die("Connect Error: " . $connect->connect_error);
-}
+include "../models/model.php";
 
 $sql = "SELECT * FROM  hisseler WHERE islem_durumu = true";
 $list = $connect->query($sql);
@@ -57,10 +48,21 @@ if (isset($_POST["ekle"])) {
 }
 
 if (isset($_POST["sat"])) {
-    $id = $_POST["hidden"];
-    $false = "false";
+    if ($_POST["checkbox"] == TRUE) {
+        $id = $_POST["hidden"];
+        $false = "false";
 
-    $updateSql = "UPDATE hisseler SET islem_durumu = $false WHERE id = $id";
-    $connect->query($updateSql);
-    header("Location: index.php");
+        $updateSql = "UPDATE hisseler SET islem_durumu = $false WHERE id = $id";
+        $connect->query($updateSql);
+        header("Location: index.php");
+    } else {
+        $_POST["checkbox"] == false;
+        header("Location: index.php");
+    }
+}
+
+if (isset($_POST["detay"])) {
+    session_start();
+    $_SESSION["id"] = $_POST["hidden"];
+    header("Location: detay.php");
 }

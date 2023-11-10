@@ -1,22 +1,14 @@
-<?php include "../controller/indexControl.php"; ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borsa Takip Sayfası</title>
-    <link rel="shortcut icon" href="image/dolar.png" type="image/x-icon" text-align:5 px>
-    <link rel="stylesheet" href="style/style.css">
-</head>
+<?php
+include "../controller/indexControl.php";
+include "partials/header.php";
+?>
 
 <body>
     <div class="container">
         <h1 style="text-align: center;">Borsa Takip Sayfası</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" name="hisseAdi" >
+            <input type="text" id="hisseAdi" name="hisseAdi">
             <?= $hisseAdi_Hata ?? "" ?><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
@@ -74,11 +66,11 @@
                 <th>Kar/Zarar</th>
             </tr>
             <tr>
-               <td></td>
-               <td><?= $aylıkKarZarar; ?></td>
+                <td></td>
+                <td><?= $aylıkKarZarar; ?></td>
             </tr>
         </table>
     </div>
 </body>
 
-</html>
+<?php include "partials/footer.php"; ?>
