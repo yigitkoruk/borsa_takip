@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Borsa Takip Sayfası</title>
+    <link rel="shortcut icon" href="image/dolar.png" type="image/x-icon" text-align:5 px>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,7 +16,7 @@
         <h1>Borsa Takip Sayfası</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" name="hisseAdi">
+            <input type="text" id="hisseAdi" name="hisseAdi" >
             <?= $hisseAdi_Hata ?? "" ?><br><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
@@ -56,23 +57,15 @@
                         <td>
                             <form method="POST">
                                 <input type="hidden" value="<?= $item["id"] ?? "" ?>" name="hidden">
-                                <input type="submit" value="Düzenle" name="duzenle" class="button">
-                                <input type="submit" value="Detay" name="detay" class="button">
-                                <input type="submit" value="Sat" name="sat" class="button">
+                                <input type="submit" value="Detay" name="detay">
+                                <input type="submit" value="Sat" name="sat">
+                                <input type="checkbox" name="checkbox">
                             </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
-        <div id="detayModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="kapatDetayModal()">&times;</span>
-                <h2>Detaylar</h2>
-                <div id="detayIcerik"></div>
-            </div>
-        </div>
 
         <h2>Aylık Kar/Zarar Tablosu</h2>
         <table id="aylikKarZararTablosu">
@@ -86,23 +79,6 @@
             </tr>
         </table>
     </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Düzenle</h2>
-            <label for="hisseAdiModal">Hisse Adı:</label>
-            <input type="text" id="hisseAdiModal" required><br><br>
-            <label for="alisMaliyetiModal">Alış Maliyeti:</label>
-            <input type="number" id="alisMaliyetiModal" required><br><br>
-            <label for="satisFiyatiModal">Satış Fiyatı:</label>
-            <input type="number" id="satisFiyatiModal" required><br><br>
-            <label for="adetModal">Adet:</label>
-            <input type="number" id="adetModal" required><br><br>
-            <button type="button" onclick="kaydet()">Kaydet</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
 </body>
 
 </html>
