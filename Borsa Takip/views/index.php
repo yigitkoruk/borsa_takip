@@ -1,35 +1,27 @@
-<?php include "control.php"; ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borsa Takip Sayfası</title>
-    <link rel="shortcut icon" href="image/dolar.png" type="image/x-icon" text-align:5 px>
-    <link rel="stylesheet" href="style.css">
-</head>
+<?php
+include "../controller/indexControl.php";
+include "partials/header.php";
+?>
 
 <body>
     <div class="container">
-        <h1>Borsa Takip Sayfası</h1>
+        <h1 style="text-align: center;">Borsa Takip Sayfası</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" name="hisseAdi" >
-            <?= $hisseAdi_Hata ?? "" ?><br><br>
+            <input type="text" id="hisseAdi" name="hisseAdi">
+            <?= $hisseAdi_Hata ?? "" ?><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
             <input type="number" id="alisMaliyeti" name="alisMaliyeti">
-            <?= $alisMaliyeti_Hata ?? "" ?><br><br>
+            <?= $alisMaliyeti_Hata ?? "" ?><br>
 
             <label for="satisFiyati">Güncel Fiyat:</label>
             <input type="number" id="satisFiyati" name="satisFiyati">
-            <?= $satisFiyati_Hata ?? "" ?><br><br>
+            <?= $satisFiyati_Hata ?? "" ?><br>
 
             <label for="adet">Adet:</label>
             <input type="number" id="adet" name="adet">
-            <?= $Adet_Hata ?? "" ?><br><br>
+            <?= $Adet_Hata ?? "" ?><br>
 
             <input type="submit" name="ekle" value="Ekle">
         </form>
@@ -74,11 +66,11 @@
                 <th>Kar/Zarar</th>
             </tr>
             <tr>
-               <td></td>
-               <td><?= $aylıkKarZarar; ?></td>
+                <td></td>
+                <td><?= $aylıkKarZarar; ?></td>
             </tr>
         </table>
     </div>
 </body>
 
-</html>
+<?php include "partials/footer.php"; ?>
