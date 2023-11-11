@@ -3,8 +3,9 @@ include "partials/header.php";
 ?>
 
 <body>
-    <div class="container">
-        <h1 style="text-align: center;">Hisse Güncelleme</h1>
+    <div class="container" id="1">
+        <a href="index.php"><i class="fa-solid fa-circle-chevron-left" style="color: #d01b1b; font-size: xxx-large;"></i></a>
+    <h1 style="text-align: center;">Hisse Güncelleme</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
             <input type="text" id="hisseAdi" name="hisseAdi" value="<?= $row["hisse_adi"] ? $row["hisse_adi"] : "Hata" ?>">
@@ -24,7 +25,58 @@ include "partials/header.php";
 
             <input type="submit" name="guncelle" value="Güncelle">
         </form>
-    </div>
+
+        <table>
+            <h2>Alış Satış İşlemleri</h2>
+            <thead>
+                <tr>
+                    <th>Hisse Adı</th>
+                    <th>Alış Maliyeti</th>
+                    <th>Satış Fiyatı</th>
+                    <th>Adet</th>
+                    <th>Kar/Zarar</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td><?= $item["hisse_adi"] ?? "" ?></td>
+                        <td><?= $item["alis_maliyeti"] ?? "" ?></td>
+                        <td><?= $item["guncel_fiyat"] ?? "" ?></td>
+                        <td><?= $item["adet"] ?? "" ?></td>
+                        <td><?= $item["kar_zarar"] ?? "" ?></td>
+                    </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <h2>Alış Satış İşlemleri</h2>
+            <thead>
+                <tr>
+                    <th>Hisse Adı</th>
+                    <th>Alış Maliyeti</th>
+                    <th>Satış Fiyatı</th>
+                    <th>Adet</th>
+                    <th>Kar/Zarar</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td><?= $item["hisse_adi"] ?? "" ?></td>
+                        <td><?= $item["alis_maliyeti"] ?? "" ?></td>
+                        <td><?= $item["guncel_fiyat"] ?? "" ?></td>
+                        <td><?= $item["adet"] ?? "" ?></td>
+                        <td><?= $item["kar_zarar"] ?? "" ?></td>
+                    </tr>
+            </tbody>
+        </table>
+
+
+    <center>
+        <a href="#1">
+            <i class="fa-solid fa-circle-chevron-up" style="color: #d01b1b; font-size: xxx-large;"></i>
+        </a>    
+    </center>
+</div>
 </body>
 
 <?php include "partials/footer.php"; ?>
