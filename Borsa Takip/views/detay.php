@@ -70,7 +70,7 @@ include "partials/header.php";
             </tbody>
         </table>
 
-
+<br><br>
     <center>
         <a href="#1">
             <i class="fa-solid fa-circle-chevron-up" style="color: #d01b1b; font-size: xxx-large;"></i>
