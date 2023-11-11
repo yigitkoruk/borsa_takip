@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 04 Kas 2023, 22:53:24
+-- Üretim Zamanı: 11 Kas 2023, 20:01:33
 -- Sunucu sürümü: 10.4.28-MariaDB
 -- PHP Sürümü: 8.0.28
 
@@ -34,7 +34,6 @@ CREATE TABLE `hisseler` (
   `guncel_fiyat` varchar(250) NOT NULL,
   `adet` varchar(250) NOT NULL,
   `kar_zarar` varchar(250) NOT NULL,
-  `tarih` timestamp NOT NULL DEFAULT current_timestamp(),
   `islem_durumu` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,8 +41,16 @@ CREATE TABLE `hisseler` (
 -- Tablo döküm verisi `hisseler`
 --
 
-INSERT INTO `hisseler` (`id`, `hisse_adi`, `alis_maliyeti`, `guncel_fiyat`, `adet`, `kar_zarar`, `tarih`, `islem_durumu`) VALUES
-(1, 'otosan', '10', '20', '100', '1000', '2023-11-04 21:31:21', 1);
+INSERT INTO `hisseler` (`id`, `hisse_adi`, `alis_maliyeti`, `guncel_fiyat`, `adet`, `kar_zarar`, `islem_durumu`) VALUES
+(1, 'otosan', '10', '20', '100', '10', 0),
+(2, 'asdasd', '10', '10', '100', '0', 0),
+(3, 'asddd', '101', '201', '1001', '20', 0),
+(4, 'fcvv', '101', '201', '1001', '30', 1),
+(5, 'ert', '10', '20', '100', '40', 1),
+(6, 'mnb', '10', '20', '100', '50', 1),
+(7, 'tgb', '10', '20', '100', '60', 1),
+(8, 'aer', '10', '20', '100', '70', 1),
+(9, 'qwcv', '10', '20', '100', '80', 1);
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -63,7 +70,7 @@ ALTER TABLE `hisseler`
 -- Tablo için AUTO_INCREMENT değeri `hisseler`
 --
 ALTER TABLE `hisseler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
