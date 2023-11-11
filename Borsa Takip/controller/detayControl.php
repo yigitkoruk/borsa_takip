@@ -9,10 +9,10 @@ $details = $connect->query($sql);
 $row = $details->fetch_assoc();
 
 if (isset($_POST["guncelle"])) {
-    $hisseAdi = $_POST["hisseAdi"];
-    $alisMaliyeti = $_POST["alisMaliyeti"];
-    $satisFiyati = $_POST["satisFiyati"];
-    $adet = $_POST["adet"];
+    $hisseAdi = $_POST["hisseAdi"] ?? "";
+    $alisMaliyeti = $_POST["alisMaliyeti"] ?? "";
+    $satisFiyati = $_POST["satisFiyati"] ?? "";
+    $adet = $_POST["adet"] ?? "";
 
     if (empty($hisseAdi)) {
         $hisseAdi_Hata = '<p style="font-size: 13px; color: red;">Lütfen hisse adı giriniz!</p>';
@@ -32,10 +32,13 @@ if (isset($_POST["guncelle"])) {
 
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $id = $_SESSION["id"];
-        $sql = "UPDATE hisseler SET hisse_adi = $hisseAdi, alis_maliyeti = $alisMaliyeti, guncel_fiyat = $satisFiyati, adet = $adet WHERE id = $id";
-        $connect->query($sql);
 
-        if ($connect->query($sql) === TRUE) {
+        $sql = "UPDATE hisseler SET hisse_adi = ?, alis_maliyeti = ?, guncel_fiyat = ?, adet = ? WHERE id = ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("sdddi", $hisseAdi, $alisMaliyeti, $satisFiyati, $adet, $id);
+        $stmt->execute();
+
+        if ($stmt) {
             header("Location: index.php");
         } else {
             echo "Hata oluştu: " . $connect->error;
