@@ -49,7 +49,7 @@ if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {
         $id = $_POST["hidden"];
 
-        $model->hisseGuncelleme($id);
+        $model->hisseSat($id);
         header("Location: index.php");
     } else {
         $_POST["checkbox"] == false;
@@ -91,7 +91,7 @@ if ($saat == '18') {
     }
 
     $veri = $model->karZarar();
-    $sonKarZarar = $veri["kar_zarar"];
+    $sonKarZarar = $veri[0]["kar_zarar"];
     $sonKarZarar += $toplamKarZarar;
 
     $hisseBilgisi = [

@@ -48,7 +48,7 @@ class model
         }
     }
 
-    public function hisseGuncelleme($id)
+    public function hisseSat($id)
     {
         try {
             $stmt = $this->connect->prepare("UPDATE hisseler SET islem_durumu = False WHERE id = :id");
@@ -116,7 +116,7 @@ class model
         }
     }
 
-    public function hisseler($id)
+    public function hisseDetay($id)
     {
         try {
             $stmt = $this->connect->prepare("SELECT * FROM hisseler WHERE id = :id");
@@ -126,6 +126,23 @@ class model
         } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
             return array();
+        }
+    }
+
+    public function hisseGuncelleme($id, $hisseBilgisi)
+    {
+        try {
+            $stmt = $this->connect->prepare("UPDATE hisseler SET hisse_adi = :value1, alis_maliyeti = :value2, guncel_fiyat = :value3, adet = :value4 WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':value1', $hisseBilgisi['value1']);
+            $stmt->bindParam(':value2', $hisseBilgisi['value2']);
+            $stmt->bindParam(':value3', $hisseBilgisi['value3']);
+            $stmt->bindParam(':value4', $hisseBilgisi['value4']);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
         }
     }
 }
