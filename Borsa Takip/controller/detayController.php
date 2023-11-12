@@ -1,12 +1,10 @@
 <?php
 include "../models/model.php";
+$model = new MODEL();
 
 session_start();
 $id = $_SESSION["id"];
-
-$sql = "SELECT * FROM hisseler WHERE id = $id";
-$details = $connect->query($sql);
-$row = $details->fetch_assoc();
+$model->hisseler($id);
 
 if (isset($_POST["guncelle"])) {
     $hisseAdi = $_POST["hisseAdi"] ?? "";

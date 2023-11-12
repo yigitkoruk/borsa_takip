@@ -1,4 +1,4 @@
-<?php include "../controller/detayControl.php";
+<?php include "../controller/detayController.php";
 include "partials/header.php";
 ?>
 
