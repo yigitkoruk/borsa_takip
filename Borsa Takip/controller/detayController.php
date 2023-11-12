@@ -1,12 +1,10 @@
 <?php
 include "../models/model.php";
+$model = new MODEL();
 
 session_start();
 $id = $_SESSION["id"];
-
-$sql = "SELECT * FROM hisseler WHERE id = $id";
-$details = $connect->query($sql);
-$row = $details->fetch_assoc();
+$hisseDetay = $model->hisseDetay($id);
 
 if (isset($_POST["guncelle"])) {
     $hisseAdi = $_POST["hisseAdi"] ?? "";
@@ -32,16 +30,19 @@ if (isset($_POST["guncelle"])) {
 
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $id = $_SESSION["id"];
+        $hisseBilgisi = [
+            "value1" => $hisseAdi,
+            "value2" => $alisMaliyeti,
+            "value3" => $satisFiyati,
+            "value4" => $adet,
+        ];
 
-        $sql = "UPDATE hisseler SET hisse_adi = ?, alis_maliyeti = ?, guncel_fiyat = ?, adet = ? WHERE id = ?";
-        $stmt = $connect->prepare($sql);
-        $stmt->bind_param("sdddi", $hisseAdi, $alisMaliyeti, $satisFiyati, $adet, $id);
-        $stmt->execute();
+        $stmt = $model->hisseGuncelleme($id, $hisseBilgisi);
 
         if ($stmt) {
             header("Location: index.php");
         } else {
-            echo "Hata oluştu: " . $connect->error;
+            echo "Hata oluştu!";
         }
     }
 }

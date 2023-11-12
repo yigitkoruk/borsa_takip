@@ -1,8 +1,7 @@
 <?php
 include "../models/model.php";
-
-$sql = "SELECT * FROM  hisseler WHERE islem_durumu = true";
-$list = $connect->query($sql);
+$model = new MODEL();
+$list = $model->hisseList();
 
 $aylıkKarZarar = 0;
 foreach ($list as $item) {
@@ -33,16 +32,15 @@ if (isset($_POST["ekle"])) {
 
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
-        $tarih = date("F");
 
-        $sql = "INSERT INTO hisseler (hisse_adi, alis_maliyeti, guncel_fiyat, adet, kar_zarar) VALUES ('$hisseAdi', $alisMaliyeti, $satisFiyati, $adet, $karZarar)";
-
-        if ($connect->query($sql) === TRUE) {
-            echo "Veri başarıyla eklendi.";
-        } else {
-            echo "Error: " . $sql . "<br>" . $connect->error;
-        }
-        $connect->close();
+        $hisseBilgisi = [
+            "value1" => $hisseAdi,
+            "value2" => $alisMaliyeti,
+            "value3" => $satisFiyati,
+            "value4" => $adet,
+            "value5" => $karZarar,
+        ];
+        $model->hisseEkleme($hisseBilgisi);
         header("Location: index.php");
     }
 }
@@ -50,10 +48,8 @@ if (isset($_POST["ekle"])) {
 if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {
         $id = $_POST["hidden"];
-        $false = "false";
 
-        $updateSql = "UPDATE hisseler SET islem_durumu = $false WHERE id = $id";
-        $connect->query($updateSql);
+        $model->hisseSat($id);
         header("Location: index.php");
     } else {
         $_POST["checkbox"] == false;
@@ -67,13 +63,13 @@ if (isset($_POST["detay"])) {
     header("Location: detay.php");
 }
 
+$saat = date('H');
+$gün = date('d');
+$toplamKarZarar = 0;
 
 if ($saat == '18') {
     date_default_timezone_set('Europe/Istanbul');
 
-    $saat = date('H');
-    $gün = date('d');
-    $toplamKarZarar = 0;
 
     foreach ($list as $item) {
         $id = $item["id"];
@@ -82,23 +78,27 @@ if ($saat == '18') {
         $adet = $item["adet"];
         $karZarar = $item["kar_zarar"];
 
-        $sql = "INSERT INTO gunluk_hisse (hisse_id, alis_maliyeti, guncel_fiyat, adet, kar_zarar) VALUES ($id, $alisMaliyeti, $satisFiyati, $adet, $karZarar)";
-        $statement = $connect->prepare($sql);
-        $statement->execute();
+        $hisseBilgisi = [
+            "value1" => $id,
+            "value2" => $alisMaliyeti,
+            "value3" => $satisFiyati,
+            "value4" => $adet,
+            "value5" => $karZarar,
+        ];
+        $model->gunlukHisse($hisseBilgisi);
 
         $toplamKarZarar += $karZarar;
     }
 
-    $sql = "SELECT kar_zarar FROM `toplam_gunluk_karzarar` ORDER BY id DESC";
-    $sonKarZarar = $connect->prepare($sql);
-    $sonKarZarar->execute();
-    $sonuc = $sonKarZarar->get_result();
-
-    $veri = $sonuc->fetch_assoc();
-    $sonKarZarar = $veri["kar_zarar"];
+    $veri = $model->karZarar();
+    $sonKarZarar = $veri[0]["kar_zarar"];
     $sonKarZarar += $toplamKarZarar;
 
-    $sql = "INSERT INTO toplam_gunluk_karzarar (kar_Zarar, tarih) VALUES ($sonKarZarar, $gün)";
-    $statement = $connect->prepare($sql);
-    $statement->execute();
+    $hisseBilgisi = [
+            "value1" => $sonKarZarar,
+            "value2" => $gün,
+        ];
+    $model->toplamGunlukKarZarar($hisseBilgisi);
 }
+
+$row = $model->gunlukHisse2();
