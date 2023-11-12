@@ -132,12 +132,13 @@ class model
     public function hisseGuncelleme($id, $hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("UPDATE hisseler SET hisse_adi = :value1, alis_maliyeti = :value2, guncel_fiyat = :value3, adet = :value4 WHERE id = :id");
+            $stmt = $this->connect->prepare("UPDATE hisseler SET hisse_adi = :value1, alis_maliyeti = :value2, guncel_fiyat = :value3, adet = :value4, kar_zarar = :value5 WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->bindParam(':value2', $hisseBilgisi['value2']);
             $stmt->bindParam(':value3', $hisseBilgisi['value3']);
             $stmt->bindParam(':value4', $hisseBilgisi['value4']);
+            $stmt->bindParam(':value5', $hisseBilgisi['value5']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {

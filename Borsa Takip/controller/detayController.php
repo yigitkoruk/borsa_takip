@@ -29,12 +29,14 @@ if (isset($_POST["guncelle"])) {
     }
 
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
+        $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
         $id = $_SESSION["id"];
         $hisseBilgisi = [
             "value1" => $hisseAdi,
             "value2" => $alisMaliyeti,
             "value3" => $satisFiyati,
             "value4" => $adet,
+            "value5" => $karZarar,
         ];
 
         $stmt = $model->hisseGuncelleme($id, $hisseBilgisi);
