@@ -1,5 +1,5 @@
 <?php
-include "../controller/indexControl.php";
+include "../controller/indexController.php";
 include "partials/header.php";
 ?>
 
@@ -68,6 +68,20 @@ include "partials/header.php";
             <tr>
                 <td></td>
                 <td><?= $aylıkKarZarar; ?></td>
+            </tr>
+        </table>
+
+        <h2>Günlük Kar/Zarar</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Gün</th>
+                <th>Kar/Zarar</th>
+            </tr>
+            </thead>
+            <tr>
+                <td></td>
+                <td></td>
             </tr>
         </table>
     </div>
