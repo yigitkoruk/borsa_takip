@@ -66,3 +66,39 @@ if (isset($_POST["detay"])) {
     $_SESSION["id"] = $_POST["hidden"];
     header("Location: detay.php");
 }
+
+
+if ($saat == '18') {
+    date_default_timezone_set('Europe/Istanbul');
+
+    $saat = date('H');
+    $gün = date('d');
+    $toplamKarZarar = 0;
+
+    foreach ($list as $item) {
+        $id = $item["id"];
+        $alisMaliyeti = $item["alis_maliyeti"];
+        $satisFiyati = $item["guncel_fiyat"];
+        $adet = $item["adet"];
+        $karZarar = $item["kar_zarar"];
+
+        $sql = "INSERT INTO gunluk_hisse (hisse_id, alis_maliyeti, guncel_fiyat, adet, kar_zarar) VALUES ($id, $alisMaliyeti, $satisFiyati, $adet, $karZarar)";
+        $statement = $connect->prepare($sql);
+        $statement->execute();
+
+        $toplamKarZarar += $karZarar;
+    }
+
+    $sql = "SELECT kar_zarar FROM `toplam_gunluk_karzarar` ORDER BY id DESC";
+    $sonKarZarar = $connect->prepare($sql);
+    $sonKarZarar->execute();
+    $sonuc = $sonKarZarar->get_result();
+
+    $veri = $sonuc->fetch_assoc();
+    $sonKarZarar = $veri["kar_zarar"];
+    $sonKarZarar += $toplamKarZarar;
+
+    $sql = "INSERT INTO toplam_gunluk_karzarar (kar_Zarar, tarih) VALUES ($sonKarZarar, $gün)";
+    $statement = $connect->prepare($sql);
+    $statement->execute();
+}
