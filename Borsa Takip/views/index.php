@@ -65,7 +65,7 @@ include "partials/header.php";
                 <th>Kar/Zarar</th>
             </tr>
             <tr>
-                <td><?= $aylıkKarZarar; ?></td>
+                <td><?= $toplamKarZarar; ?></td>
             </tr>
         </table>
 
@@ -93,7 +93,7 @@ include "partials/header.php";
                 <th>Ay</th>
                 <th>Kar/Zarar</th>
             </tr>
-            <?php foreach ($aylikKarZararTablosu as $aylikKarZarar) : ?>
+            <?php foreach ($aylikKarZarar as $aylikKarZarar) : ?>
                 <tr>
                     <td><?= $aylikKarZarar["ay"] ?? "" ?></td>
                     <td><?= $aylikKarZarar["kar_zarar"] ?? "" ?></td>

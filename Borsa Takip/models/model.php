@@ -199,4 +199,16 @@ class model
             return array();
         }
     }
+
+    public function aylıkKarZararListe()
+    {
+        try {
+            $stmt = $this->connect->prepare("SELECT * FROM aylık_karzarar");
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return array();
+        }
+    }
 }

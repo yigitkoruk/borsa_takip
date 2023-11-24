@@ -8,10 +8,11 @@ $ay = date("F");
 $list = $model->hisseList();
 $gunlukKarZarar = $model->gunlukKarZarar();
 $row = $model->gunlukHisse2();
+$aylikKarZarar = $model->aylıkKarZararListe();
 
-$aylıkKarZarar = 0;
+$toplamKarZarar = 0;
 foreach ($list as $item) {
-    $aylıkKarZarar += $item["kar_zarar"];
+    $toplamKarZarar += $item["kar_zarar"];
 }
 
 if (isset($_POST["ekle"])) {
