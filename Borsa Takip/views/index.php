@@ -59,6 +59,24 @@ include "partials/header.php";
             </tbody>
         </table>
 
+        <h2>Günlük Kar/Zarar</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>İd</th>
+                    <th>Gün</th>
+                    <th>Kar/Zarar</th>
+                </tr>
+            </thead>
+            <?php foreach ($gunlukKarZarar as $gunKarZarar) : ?>
+            <tr>
+                <td><?= $gunKarZarar["id"] ?? "" ?></td>
+                <td><?= $gunKarZarar["tarih"] ?? "" ?></td>
+                <td><?= $gunKarZarar["kar_zarar"] ?? "" ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+
         <h2>Aylık Kar/Zarar Tablosu</h2>
         <table id="aylikKarZararTablosu">
             <tr>
@@ -68,20 +86,6 @@ include "partials/header.php";
             <tr>
                 <td></td>
                 <td><?= $aylıkKarZarar; ?></td>
-            </tr>
-        </table>
-
-        <h2>Günlük Kar/Zarar</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Gün</th>
-                <th>Kar/Zarar</th>
-            </tr>
-            </thead>
-            <tr>
-                <td></td>
-                <td></td>
             </tr>
         </table>
     </div>
