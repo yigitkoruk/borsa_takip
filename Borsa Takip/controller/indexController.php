@@ -103,3 +103,24 @@ if ($saat == '18') {
     ];
     $model->toplamGunlukKarZarar($hisseBilgisi);
 }
+
+if ($gün == 1) {
+    $gecenAyKarZarar = $model->gecenAyKarZarar();
+    $aylıkKarZarar = $toplamKarZarar - $gecenAyKarZarar;
+
+    $hisseBilgisi = [
+        "value1" => $aylıkKarZarar,
+    ];
+    $model->aylıkKarZarar($hisseBilgisi);
+}
+
+// $gunler = array('Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi');
+// $bugunun_gunu = date('w');
+// $gun = $gunler[$bugunun_gunu];
+
+// if ($gun == "Cuma") {
+// $gecmisHaftaKarZarar = $model->gecmisHaftaKarZarar();
+
+// $karZarar = $karZarar - $gecmisHaftaKarZarar;
+
+// }
