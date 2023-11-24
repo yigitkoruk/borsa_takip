@@ -5,7 +5,7 @@ include "partials/header.php";
 <body>
     <div class="container" id="1">
         <a href="index.php"><i class="fa-solid fa-circle-chevron-left" style="color: #d01b1b; font-size: xxx-large;"></i></a>
-    <h1 style="text-align: center;">Hisse Güncelleme</h1>
+        <h1 style="text-align: center;">Hisse Güncelleme</h1>
         <form id="borsaForm" method="POST">
             <label for="hisseAdi">Hisse Adı:</label>
             <input type="text" id="hisseAdi" name="hisseAdi" value="<?= $hisseDetay[0]["hisse_adi"] ? $hisseDetay[0]["hisse_adi"] : "Hata" ?>">
@@ -26,57 +26,31 @@ include "partials/header.php";
             <input type="submit" name="guncelle" value="Güncelle">
         </form>
 
+        <h2>Hisse Kar/Zarar</h2>
         <table>
-            <h2>Alış Satış İşlemleri</h2>
             <thead>
                 <tr>
-                    <th>Hisse Adı</th>
-                    <th>Alış Maliyeti</th>
-                    <th>Satış Fiyatı</th>
-                    <th>Adet</th>
+                    <th>Id</th>
+                    <th>Gün</th>
                     <th>Kar/Zarar</th>
                 </tr>
             </thead>
-            <tbody>
-                    <tr>
-                        <td><?= $item["hisse_adi"] ?? "" ?></td>
-                        <td><?= $item["alis_maliyeti"] ?? "" ?></td>
-                        <td><?= $item["guncel_fiyat"] ?? "" ?></td>
-                        <td><?= $item["adet"] ?? "" ?></td>
-                        <td><?= $item["kar_zarar"] ?? "" ?></td>
-                    </tr>
-            </tbody>
-        </table>
-
-        <table>
-            <h2>Alış Satış İşlemleri</h2>
-            <thead>
+            <?php foreach ($hisseKarZarar as $hisse) : ?>
                 <tr>
-                    <th>Hisse Adı</th>
-                    <th>Alış Maliyeti</th>
-                    <th>Satış Fiyatı</th>
-                    <th>Adet</th>
-                    <th>Kar/Zarar</th>
+                    <td><?= $hisse["id"] ?? "" ?></td>
+                    <td><?= $hisse["gun"] ?? "" ?></td>
+                    <td><?= $hisse["kar_zarar"] ?? "" ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                    <tr>
-                        <td><?= $item["hisse_adi"] ?? "" ?></td>
-                        <td><?= $item["alis_maliyeti"] ?? "" ?></td>
-                        <td><?= $item["guncel_fiyat"] ?? "" ?></td>
-                        <td><?= $item["adet"] ?? "" ?></td>
-                        <td><?= $item["kar_zarar"] ?? "" ?></td>
-                    </tr>
-            </tbody>
+            <?php endforeach; ?>
         </table>
 
-<br><br>
-    <center>
-        <a href="#1">
-            <i class="fa-solid fa-circle-chevron-up" style="color: #d01b1b; font-size: xxx-large;"></i>
-        </a>    
-    </center>
-</div>
+        <br><br>
+        <center>
+            <a href="#1">
+                <i class="fa-solid fa-circle-chevron-up" style="color: #d01b1b; font-size: xxx-large;"></i>
+            </a>
+        </center>
+    </div>
 </body>
 
 <?php include "partials/footer.php"; ?>

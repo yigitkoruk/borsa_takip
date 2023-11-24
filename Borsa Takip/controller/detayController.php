@@ -5,6 +5,7 @@ $model = new MODEL();
 session_start();
 $id = $_SESSION["id"];
 $hisseDetay = $model->hisseDetay($id);
+$hisseKarZarar = $model->hisseKarZarar($id);
 
 if (isset($_POST["guncelle"])) {
     $hisseAdi = $_POST["hisseAdi"] ?? "";
