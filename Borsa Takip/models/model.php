@@ -64,12 +64,13 @@ class model
     public function gunlukHisse($hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("INSERT INTO gunluk_hisse (hisse_id, alis_maliyeti, guncel_fiyat, adet, kar_zarar) VALUES (:value1, :value2, :value3, :value4, :value5)");
+            $stmt = $this->connect->prepare("INSERT INTO gunluk_hisse (hisse_id, alis_maliyeti, guncel_fiyat, adet, kar_zarar, ay) VALUES (:value1, :value2, :value3, :value4, :value5, :value6)");
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->bindParam(':value2', $hisseBilgisi['value2']);
             $stmt->bindParam(':value3', $hisseBilgisi['value3']);
             $stmt->bindParam(':value4', $hisseBilgisi['value4']);
             $stmt->bindParam(':value5', $hisseBilgisi['value5']);
+            $stmt->bindParam(':value6', $hisseBilgisi['value6']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {
@@ -78,24 +79,13 @@ class model
         }
     }
 
-    public function karZarar()
-    {
-        try {
-            $stmt = $this->connect->prepare("SELECT kar_zarar FROM `toplam_gunluk_karzarar` ORDER BY id DESC");
-            $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return array();
-        }
-    }
-
     public function toplamGunlukKarZarar($hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("INSERT INTO toplam_gunluk_karzarar (kar_Zarar, tarih) VALUES (:value1, :value2)");
+            $stmt = $this->connect->prepare("INSERT INTO toplam_gunluk_karzarar (kar_Zarar, tarih, ay) VALUES (:value1, :value2, :value3)");
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->bindParam(':value2', $hisseBilgisi['value2']);
+            $stmt->bindParam(':value3', $hisseBilgisi['value3']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {
@@ -172,36 +162,11 @@ class model
         }
     }
 
-    public function dunkiKarZarar($id)
+    public function aylıkKarZarar($hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("SELECT * FROM gunluk_hisse WHERE hisse_id = :id ORDER BY id DESC LIMIT 1");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return array();
-        }
-    }
-
-    public function gecenAyKarZarar()
-    {
-        try {
-            $stmt = $this->connect->prepare("SELECT * FROM haftalik_karzarar ORDER BY id DESC");
-            $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return array();
-        }
-    }
-
-    public function aylıkKarZarar ($hisseBilgisi)
-    {
-        try {
-            $stmt = $this->connect->prepare("INSERT INTO haftalık_karzarar (kar_Zarar) VALUES (:value1)");
-            $stmt->bindParam(':value2', $hisseBilgisi['value1']);
+            $stmt = $this->connect->prepare("INSERT INTO aylık_karzarar (kar_Zarar) VALUES (:value1)");
+            $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {
@@ -210,27 +175,28 @@ class model
         }
     }
 
-    // public function gecmisHaftaKarZarar()
-    // {
-    //     try {
-    //         $stmt = $this->connect->prepare("SELECT kar_zarar FROM haftalık_karzarar ORDER BY id DESC");
-    //         $stmt->execute();
-    //         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    //     } catch (\PDOException $e) {
-    //         echo "Error: " . $e->getMessage();
-    //         return array();
-    //     }
-    // }
+    public function aylikKarZararTablosu()
+    {
+        try {
+            $stmt = $this->connect->prepare("SELECT * FROM aylık_karzarar ORDER BY id DESC");
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return array();
+        }
+    }
 
-    // public function toplamKarZarar()
-    // {
-    //     try {
-    //         $stmt = $this->connect->prepare("SELECT * FROM toplam_karzarar ");
-    //         $stmt->execute();
-    //         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    //     } catch (\PDOException $e) {
-    //         echo "Error: " . $e->getMessage();
-    //         return array();
-    //     }
-    // }
+    public function aylıkHesaplama($ay)
+    {
+        try {
+            $stmt = $this->connect->prepare("SELECT * FROM toplam_gunluk_karzarar WHERE ay = :ay");
+            $stmt->bindParam(':ay', $ay);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return array();
+        }
+    }
 }

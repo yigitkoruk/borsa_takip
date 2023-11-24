@@ -59,6 +59,16 @@ include "partials/header.php";
             </tbody>
         </table>
 
+        <h2>Toplam Kar/Zarar</h2>
+        <table id="aylikKarZararTablosu">
+            <tr>
+                <th>Kar/Zarar</th>
+            </tr>
+            <tr>
+                <td><?= $aylıkKarZarar; ?></td>
+            </tr>
+        </table>
+
         <h2>Günlük Kar/Zarar</h2>
         <table>
             <thead>
@@ -69,11 +79,11 @@ include "partials/header.php";
                 </tr>
             </thead>
             <?php foreach ($gunlukKarZarar as $gunKarZarar) : ?>
-            <tr>
-                <td><?= $gunKarZarar["id"] ?? "" ?></td>
-                <td><?= $gunKarZarar["tarih"] ?? "" ?></td>
-                <td><?= $gunKarZarar["kar_zarar"] ?? "" ?></td>
-            </tr>
+                <tr>
+                    <td><?= $gunKarZarar["id"] ?? "" ?></td>
+                    <td><?= $gunKarZarar["tarih"] ?? "" ?></td>
+                    <td><?= $gunKarZarar["kar_zarar"] ?? "" ?></td>
+                </tr>
             <?php endforeach; ?>
         </table>
 
@@ -83,10 +93,12 @@ include "partials/header.php";
                 <th>Ay</th>
                 <th>Kar/Zarar</th>
             </tr>
-            <tr>
-                <td></td>
-                <td><?= $aylıkKarZarar; ?></td>
-            </tr>
+            <?php foreach ($aylikKarZararTablosu as $aylikKarZarar) : ?>
+                <tr>
+                    <td><?= $aylikKarZarar["ay"] ?? "" ?></td>
+                    <td><?= $aylikKarZarar["kar_zarar"] ?? "" ?></td>
+                </tr>
+            <?php endforeach; ?>
         </table>
     </div>
 </body>
