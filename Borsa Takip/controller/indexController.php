@@ -1,7 +1,12 @@
 <?php
 include "../models/model.php";
 $model = new MODEL();
+date_default_timezone_set('Europe/Istanbul');
+$saat = date('H');
+$gün = date('d');
 $list = $model->hisseList();
+$gunlukKarZarar = $model->gunlukKarZarar();
+$row = $model->gunlukHisse2();
 
 $aylıkKarZarar = 0;
 foreach ($list as $item) {
@@ -63,42 +68,59 @@ if (isset($_POST["detay"])) {
     header("Location: detay.php");
 }
 
-$saat = date('H');
-$gün = date('d');
 $toplamKarZarar = 0;
 
 if ($saat == '18') {
-    date_default_timezone_set('Europe/Istanbul');
-
-
     foreach ($list as $item) {
+        $dunkiKarZarar = $bugunkuKarZarar = 0;
         $id = $item["id"];
         $alisMaliyeti = $item["alis_maliyeti"];
         $satisFiyati = $item["guncel_fiyat"];
         $adet = $item["adet"];
         $karZarar = $item["kar_zarar"];
 
+        $dunkiKarZarar = $model->dunkiKarZarar($id);
+        $dunkiKarZarar = $dunkiKarZarar[0]["kar_zarar"];
+        $bugunkuKarZarar = $karZarar - $dunkiKarZarar;
+
         $hisseBilgisi = [
             "value1" => $id,
             "value2" => $alisMaliyeti,
             "value3" => $satisFiyati,
             "value4" => $adet,
-            "value5" => $karZarar,
+            "value5" => $bugunkuKarZarar,
         ];
         $model->gunlukHisse($hisseBilgisi);
-
-        $toplamKarZarar += $karZarar;
     }
 
     $veri = $model->karZarar();
     $sonKarZarar = $veri[0]["kar_zarar"];
-    $sonKarZarar += $toplamKarZarar;
+    $sonKarZarar -= $toplamKarZarar;
 
     $hisseBilgisi = [
-            "value1" => $sonKarZarar,
-            "value2" => $gün,
-        ];
+        "value1" => $sonKarZarar,
+        "value2" => $gün,
+    ];
     $model->toplamGunlukKarZarar($hisseBilgisi);
 }
 
-$row = $model->gunlukHisse2();
+if ($gün == 1) {
+    $gecenAyKarZarar = $model->gecenAyKarZarar();
+    $aylıkKarZarar = $toplamKarZarar - $gecenAyKarZarar;
+
+    $hisseBilgisi = [
+        "value1" => $aylıkKarZarar,
+    ];
+    $model->aylıkKarZarar($hisseBilgisi);
+}
+
+// $gunler = array('Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi');
+// $bugunun_gunu = date('w');
+// $gun = $gunler[$bugunun_gunu];
+
+// if ($gun == "Cuma") {
+// $gecmisHaftaKarZarar = $model->gecmisHaftaKarZarar();
+
+// $karZarar = $karZarar - $gecmisHaftaKarZarar;
+
+// }
