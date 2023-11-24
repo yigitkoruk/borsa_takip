@@ -165,8 +165,9 @@ class model
     public function aylıkKarZarar($hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("INSERT INTO aylık_karzarar (kar_Zarar) VALUES (:value1)");
+            $stmt = $this->connect->prepare("INSERT INTO aylık_karzarar (ay, kar_Zarar) VALUES (:value1, :value2)");
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
+            $stmt->bindParam(':value2', $hisseBilgisi['value2']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {

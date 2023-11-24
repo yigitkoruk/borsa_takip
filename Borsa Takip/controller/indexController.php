@@ -84,7 +84,7 @@ if ($saat == '18') {
     }
 
     $hisseBilgisi = [
-        "value1" => $aylıkKarZarar,
+        "value1" => $toplamKarZarar,
         "value2" => $gün,
         "value3" => $ay,
     ];
@@ -99,7 +99,8 @@ if ($gün == 1) {
     }
 
     $hisseBilgisi = [
-        "value1" => $aylıkKarZarar,
+        "value1" => $ay,
+        "value2" => $aylıkKarZarar,
     ];
     $model->aylıkKarZarar($hisseBilgisi);
 }
