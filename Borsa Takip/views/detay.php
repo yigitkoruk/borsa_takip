@@ -12,11 +12,11 @@ include "partials/header.php";
             <?= $hisseAdi_Hata ?? "" ?><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
-            <input type="number" id="alisMaliyeti" name="alisMaliyeti" value="<?= $hisseDetay[0]["alis_maliyeti"] ? $hisseDetay[0]["alis_maliyeti"] : "Hata" ?>">
+            <input type="text" id="alisMaliyeti" name="alisMaliyeti" value="<?= $hisseDetay[0]["alis_maliyeti"] ? $hisseDetay[0]["alis_maliyeti"] : "Hata" ?>">
             <?= $alisMaliyeti_Hata ?? "" ?><br>
 
             <label for="satisFiyati">Güncel Fiyat:</label>
-            <input type="number" id="satisFiyati" name="satisFiyati" value="<?= $hisseDetay[0]["guncel_fiyat"] ? $hisseDetay[0]["guncel_fiyat"] : "Hata" ?>">
+            <input type="text" id="satisFiyati" name="satisFiyati" value="<?= $hisseDetay[0]["guncel_fiyat"] ? $hisseDetay[0]["guncel_fiyat"] : "Hata" ?>">
             <?= $satisFiyati_Hata ?? "" ?><br>
 
             <label for="adet">Adet:</label>

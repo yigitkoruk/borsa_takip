@@ -1,22 +1,11 @@
 <?php
-include "../models/model.php";
+include "backRound.php";
+include_once "../models/model.php";
 $model = new MODEL();
-date_default_timezone_set('Europe/Istanbul');
-$saat = date('H');
-$gün = date('d');
-$ay = date("F");
 $list = $model->hisseList();
-$gunlukKarZarar = $model->gunlukKarZarar();
 $row = $model->gunlukHisse2();
-$aylikKarZarar = $model->aylıkKarZararListe();
 
-$toplamKarZarar = 0;
-foreach ($list as $item) {
-    $toplamKarZarar += $item["kar_zarar"];
-}
-
-$activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'alisSatis';
-
+//Ekle butonuna tıklandığında.
 if (isset($_POST["ekle"])) {
     $hisseAdi = $_POST["hisseAdi"];
     $alisMaliyeti = $_POST["alisMaliyeti"];
@@ -39,6 +28,7 @@ if (isset($_POST["ekle"])) {
         $Adet_Hata = '<p style="font-size: 13px; color: red;">Lütfen adet giriniz!</p>';
     }
 
+    //Tüm koşullar sağlanır ve hata oluşmaz ise ekleme işlemi gerçekleşir.
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
 
@@ -54,6 +44,7 @@ if (isset($_POST["ekle"])) {
     }
 }
 
+//Sat butonuna tıklandığında.
 if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {
         $id = $_POST["hidden"];
@@ -66,43 +57,9 @@ if (isset($_POST["sat"])) {
     }
 }
 
+//Detay botunona tıklandığında.
 if (isset($_POST["detay"])) {
     session_start();
     $_SESSION["id"] = $_POST["hidden"];
     header("Location: detay.php");
-}
-
-if ($saat == '18') {
-    foreach ($list as $item) {
-        $hisseBilgisi = [
-            "value1" => $item["id"],
-            "value2" => $item["alis_maliyeti"],
-            "value3" => $item["guncel_fiyat"],
-            "value4" => $item["adet"],
-            "value5" => $item["kar_zarar"],
-            "value6" => $ay,
-        ];
-        $model->gunlukHisse($hisseBilgisi);
-    }
-
-    $hisseBilgisi = [
-        "value1" => $toplamKarZarar,
-        "value2" => $gün,
-        "value3" => $ay,
-    ];
-    $model->toplamGunlukKarZarar($hisseBilgisi);
-}
-
-if ($gün == 1) {
-    $aylıkHesapama = $model->aylıkHesaplama($ay);
-    
-    foreach ($aylıkHesapama as $item) {
-        $aylıkKarZarar += $item["kar_zarar"];
-    }
-
-    $hisseBilgisi = [
-        "value1" => $ay,
-        "value2" => $aylıkKarZarar,
-    ];
-    $model->aylıkKarZarar($hisseBilgisi);
 }

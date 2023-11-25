@@ -1,24 +1,23 @@
 <?php
 include "../controller/indexController.php";
 include "partials/header.php";
+include "partials/navbar.php";
 ?>
 
 <body>
-        <?php include "partials/navbar.php"; ?>
     <div class="container">
-        <?php if ($activeTab == "alisSatis"): ?>
-            <h2>Alış Satış İşlemleri</h2>
-            <form id="borsaForm" method="POST">
-                <label for="hisseAdi">Hisse Adı:</label>
-                <input type="text" id="hisseAdi" name="hisseAdi">
-                <?= $hisseAdi_Hata ?? "" ?><br>
-           
+        <h2>Alış Satış İşlemleri</h2>
+        <form id="borsaForm" method="POST">
+            <label for="hisseAdi">Hisse Adı:</label>
+            <input type="text" id="hisseAdi" name="hisseAdi">
+            <?= $hisseAdi_Hata ?? "" ?><br>
+
             <label for="alisMaliyeti">Alış Maliyeti:</label>
-            <input type="number" id="alisMaliyeti" name="alisMaliyeti">
+            <input type="text" id="alisMaliyeti" name="alisMaliyeti">
             <?= $alisMaliyeti_Hata ?? "" ?><br>
 
             <label for="satisFiyati">Güncel Fiyat:</label>
-            <input type="number" id="satisFiyati" name="satisFiyati">
+            <input type="text" id="satisFiyati" name="satisFiyati">
             <?= $satisFiyati_Hata ?? "" ?><br>
 
             <label for="adet">Adet:</label>
@@ -60,50 +59,8 @@ include "partials/header.php";
                 <?php endforeach; ?>
             </tbody>
         </table>
-            <?php elseif ($activeTab == "toplamKarZarar"): ?>
-        <h2>Toplam Kar/Zarar</h2>
-        <table id="aylikKarZararTablosu">
-            <tr>
-                <th>Kar/Zarar</th>
-            </tr>
-            <tr>
-                <td><?= $toplamKarZarar; ?></td>
-            </tr>
-        </table>
-            <?php elseif ($activeTab == "gunlukKarZarar"): ?>
-        <h2>Günlük Kar/Zarar</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>İd</th>
-                    <th>Gün</th>
-                    <th>Kar/Zarar</th>
-                </tr>
-            </thead>
-            <?php foreach ($gunlukKarZarar as $gunKarZarar) : ?>
-                <tr>
-                    <td><?= $gunKarZarar["id"] ?? "" ?></td>
-                    <td><?= $gunKarZarar["tarih"] ?? "" ?></td>
-                    <td><?= $gunKarZarar["kar_zarar"] ?? "" ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-            <?php elseif ($activeTab == "aylikKarZarar"): ?>
-        <h2>Aylık Kar/Zarar Tablosu</h2>
-        <table id="aylikKarZararTablosu">
-            <tr>
-                <th>Ay</th>
-                <th>Kar/Zarar</th>
-            </tr>
-            <?php foreach ($aylikKarZarar as $aylikKarZarar) : ?>
-                <tr>
-                    <td><?= $aylikKarZarar["ay"] ?? "" ?></td>
-                    <td><?= $aylikKarZarar["kar_zarar"] ?? "" ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
     </div>
+    <br><br>
 </body>
 
 <?php include "partials/footer.php"; ?>
