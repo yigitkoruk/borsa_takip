@@ -13,11 +13,11 @@ include "partials/navbar.php";
             <?= $hisseAdi_Hata ?? "" ?><br>
 
             <label for="alisMaliyeti">Alış Maliyeti:</label>
-            <input type="number" id="alisMaliyeti" name="alisMaliyeti">
+            <input type="text" id="alisMaliyeti" name="alisMaliyeti">
             <?= $alisMaliyeti_Hata ?? "" ?><br>
 
             <label for="satisFiyati">Güncel Fiyat:</label>
-            <input type="number" id="satisFiyati" name="satisFiyati">
+            <input type="text" id="satisFiyati" name="satisFiyati">
             <?= $satisFiyati_Hata ?? "" ?><br>
 
             <label for="adet">Adet:</label>
