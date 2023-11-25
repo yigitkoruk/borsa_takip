@@ -1,8 +1,8 @@
 <nav>
     <ul>
-        <li><a href="?tab=alisSatis">Alış Satış İşlemleri</a></li>
-        <li><a href="?tab=toplamKarZarar">Toplam Kar/Zarar</a></li>
-        <li><a href="?tab=gunlukKarZarar">Günlük Kar/Zarar</a></li>
-        <li><a href="?tab=aylikKarZarar">Aylık Kar/Zarar Tablosu</a></li>
+        <li><a href="index.php">Alış Satış İşlemleri</a></li>
+        <li><a href="toplamKarZarar.php">Toplam Kar/Zarar</a></li>
+        <li><a href="gunlukKarZarar.php">Günlük Kar/Zarar</a></li>
+        <li><a href="aylıkKarZarar.php">Aylık Kar/Zarar Tablosu</a></li>
     </ul>
 </nav>
