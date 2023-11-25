@@ -82,3 +82,8 @@ if ($gün == 1) {
     ];
     $model->aylıkKarZarar($hisseBilgisi);
 }
+
+
+
+
+// $rakam2 = floatval(str_replace(array('.',','), '', $rakam));

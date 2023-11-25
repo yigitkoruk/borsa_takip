@@ -7,10 +7,10 @@ $row = $model->gunlukHisse2();
 
 //Ekle butonuna tıklandığında.
 if (isset($_POST["ekle"])) {
-    $hisseAdi = $_POST["hisseAdi"];
-    $alisMaliyeti = $_POST["alisMaliyeti"];
-    $satisFiyati = $_POST["satisFiyati"];
-    $adet = $_POST["adet"];
+    $hisseAdi = trim($_POST["hisseAdi"]);
+    $alisMaliyeti = trim($_POST["alisMaliyeti"]);
+    $satisFiyati = trim($_POST["satisFiyati"]);
+    $adet = trim($_POST["adet"]);
 
     if (empty($hisseAdi)) {
         $hisseAdi_Hata = '<p style="font-size: 13px; color: red;">Lütfen hisse adı giriniz!</p>';

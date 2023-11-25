@@ -28,7 +28,7 @@ include "partials/navbar.php";
         </form>
 
         <table>
-            <h2>Alış Satış İşlemleri</h2>
+            <h2>Pörtföy</h2>
             <thead>
                 <tr>
                     <th>Hisse Adı</th>
