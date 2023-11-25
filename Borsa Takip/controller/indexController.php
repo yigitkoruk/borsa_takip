@@ -6,9 +6,7 @@ $saat = date('H');
 $gün = date('d');
 $ay = date("F");
 $list = $model->hisseList();
-$gunlukKarZarar = $model->gunlukKarZarar();
 $row = $model->gunlukHisse2();
-$aylikKarZarar = $model->aylıkKarZararListe();
 
 $toplamKarZarar = 0;
 foreach ($list as $item) {
