@@ -44,14 +44,16 @@ if ($islemZamanı == '18:30') {
         $xpath = new DOMXPath($dom);
 
         // data-last-price değerlerini al
-        $lastPrice = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
+        $satisFiyati = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
 
-        $karZarar = ($lastPrice - $item["alis_maliyeti"]) * $item["adet"];
+        // Gelen ondalıklı veriyi rakama çevirerek işlemi yapar. Ardından tekrar ondalık hale çevirir.
+        $karZarar = (floatval(str_replace(array('.', ','), '', $satisFiyati)) - floatval(str_replace(array('.', ','), '', $item["alis_maliyeti"]))) * $item["adet"];
+        $karZarar = number_format($karZarar, 2, ',');
 
         $hisseBilgisi = [
             "value1" => $item["id"],
             "value2" => $item["alis_maliyeti"],
-            "value3" => $lastPrice,
+            "value3" => $satisFiyati,
             "value4" => $item["adet"],
             "value5" => $karZarar,
             "value6" => $ay,

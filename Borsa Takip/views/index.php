@@ -6,34 +6,23 @@ include "partials/navbar.php";
 
 <body>
     <div class="container">
-        <h2>Alış Satış İşlemleri</h2>
-        <form id="borsaForm" method="POST">
-            <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" name="hisseAdi">
-            <?= $hisseAdi_Hata ?? "" ?><br>
-
-            <label for="alisMaliyeti">Alış Maliyeti:</label>
-            <input type="text" id="alisMaliyeti" name="alisMaliyeti">
-            <?= $alisMaliyeti_Hata ?? "" ?><br>
-
-            <label for="satisFiyati">Güncel Fiyat:</label>
-            <input type="text" id="satisFiyati" name="satisFiyati">
-            <?= $satisFiyati_Hata ?? "" ?><br>
-
-            <label for="adet">Adet:</label>
-            <input type="number" id="adet" name="adet">
-            <?= $Adet_Hata ?? "" ?><br>
-
-            <input type="submit" name="ekle" value="Ekle">
-        </form>
+        <h2>Toplam Kar/Zarar</h2>
+        <table id="aylikKarZararTablosu">
+            <tr>
+                <th>Kar/Zarar</th>
+            </tr>
+            <tr>
+                <td><?= $toplamKarZarar; ?></td>
+            </tr>
+        </table>
 
         <table>
-            <h2>Alış Satış İşlemleri</h2>
+            <h2>Pörtföy</h2>
             <thead>
                 <tr>
                     <th>Hisse Adı</th>
                     <th>Alış Maliyeti</th>
-                    <th>Satış Fiyatı</th>
+                    <th>Güncel Fiyatı</th>
                     <th>Adet</th>
                     <th>Kar/Zarar</th>
                     <th>İşlemler</th>

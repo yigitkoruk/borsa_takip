@@ -10,14 +10,12 @@ include "partials/navbar.php";
         <table>
             <thead>
                 <tr>
-                    <th>İd</th>
                     <th>Gün</th>
                     <th>Kar/Zarar</th>
                 </tr>
             </thead>
             <?php foreach ($gunlukKarZarar as $gunKarZarar) : ?>
                 <tr>
-                    <td><?= $gunKarZarar["id"] ?? "" ?></td>
                     <td><?= $gunKarZarar["tarih"] ?? "" ?></td>
                     <td><?= $gunKarZarar["kar_zarar"] ?? "" ?></td>
                 </tr>
