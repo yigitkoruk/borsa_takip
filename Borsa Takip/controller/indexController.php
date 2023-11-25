@@ -5,6 +5,7 @@ $model = new MODEL();
 $list = $model->hisseList();
 $row = $model->gunlukHisse2();
 
+//Ekle butonuna tıklandığında.
 if (isset($_POST["ekle"])) {
     $hisseAdi = $_POST["hisseAdi"];
     $alisMaliyeti = $_POST["alisMaliyeti"];
@@ -27,6 +28,7 @@ if (isset($_POST["ekle"])) {
         $Adet_Hata = '<p style="font-size: 13px; color: red;">Lütfen adet giriniz!</p>';
     }
 
+    //Tüm koşullar sağlanır ve hata oluşmaz ise ekleme işlemi gerçekleşir.
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
 
@@ -42,6 +44,7 @@ if (isset($_POST["ekle"])) {
     }
 }
 
+//Sat butonuna tıklandığında.
 if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {
         $id = $_POST["hidden"];
@@ -54,6 +57,7 @@ if (isset($_POST["sat"])) {
     }
 }
 
+//Detay botunona tıklandığında.
 if (isset($_POST["detay"])) {
     session_start();
     $_SESSION["id"] = $_POST["hidden"];

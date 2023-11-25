@@ -7,6 +7,7 @@ $id = $_SESSION["id"];
 $hisseDetay = $model->hisseDetay($id);
 $hisseKarZarar = $model->hisseKarZarar($id);
 
+//Güncelle butonuna basıldığında.
 if (isset($_POST["guncelle"])) {
     $hisseAdi = $_POST["hisseAdi"] ?? "";
     $alisMaliyeti = $_POST["alisMaliyeti"] ?? "";
@@ -29,6 +30,7 @@ if (isset($_POST["guncelle"])) {
         $Adet_Hata = '<p style="font-size: 13px; color: red;">Lütfen adet giriniz!</p>';
     }
 
+    //Tüm koşullar doğrulanır ve hata olmaz ise güncelleme işlemi gerçekleşir.
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
         $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
         $id = $_SESSION["id"];
@@ -42,6 +44,7 @@ if (isset($_POST["guncelle"])) {
 
         $stmt = $model->hisseGuncelleme($id, $hisseBilgisi);
 
+        //Güncelleme işleminin doğrulaması yapılır.
         if ($stmt) {
             header("Location: index.php");
         } else {
