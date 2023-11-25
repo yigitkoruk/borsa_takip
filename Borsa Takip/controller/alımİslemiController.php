@@ -2,7 +2,6 @@
 include "../models/model.php";
 $model = new MODEL();
 
-
 //Ekle butonuna tıklandığında.
 if (isset($_POST["ekle"])) {
     $hisseAdi = trim($_POST["hisseAdi"]);
@@ -28,7 +27,8 @@ if (isset($_POST["ekle"])) {
 
     //Tüm koşullar sağlanır ve hata oluşmaz ise ekleme işlemi gerçekleşir.
     if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
-        $karZarar = ($satisFiyati - $alisMaliyeti) * $adet;
+        $karZarar = (floatval(str_replace(array('.', ','), '', $satisFiyati)) - floatval(str_replace(array('.', ','), '', $item["alis_maliyeti"]))) * $adet;
+        $karZarar = number_format($karZarar, 2, ',');
 
         $hisseBilgisi = [
             "value1" => $hisseAdi,
