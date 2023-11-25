@@ -4,13 +4,15 @@ include "partials/header.php";
 ?>
 
 <body>
+        <?php include "partials/navbar.php"; ?>
     <div class="container">
-        <h1 style="text-align: center;">Borsa Takip Sayfası</h1>
-        <form id="borsaForm" method="POST">
-            <label for="hisseAdi">Hisse Adı:</label>
-            <input type="text" id="hisseAdi" name="hisseAdi">
-            <?= $hisseAdi_Hata ?? "" ?><br>
-
+        <?php if ($activeTab == "alisSatis"): ?>
+            <h2>Alış Satış İşlemleri</h2>
+            <form id="borsaForm" method="POST">
+                <label for="hisseAdi">Hisse Adı:</label>
+                <input type="text" id="hisseAdi" name="hisseAdi">
+                <?= $hisseAdi_Hata ?? "" ?><br>
+           
             <label for="alisMaliyeti">Alış Maliyeti:</label>
             <input type="number" id="alisMaliyeti" name="alisMaliyeti">
             <?= $alisMaliyeti_Hata ?? "" ?><br>
@@ -58,7 +60,7 @@ include "partials/header.php";
                 <?php endforeach; ?>
             </tbody>
         </table>
-
+            <?php elseif ($activeTab == "toplamKarZarar"): ?>
         <h2>Toplam Kar/Zarar</h2>
         <table id="aylikKarZararTablosu">
             <tr>
@@ -68,7 +70,7 @@ include "partials/header.php";
                 <td><?= $toplamKarZarar; ?></td>
             </tr>
         </table>
-
+            <?php elseif ($activeTab == "gunlukKarZarar"): ?>
         <h2>Günlük Kar/Zarar</h2>
         <table>
             <thead>
@@ -86,7 +88,7 @@ include "partials/header.php";
                 </tr>
             <?php endforeach; ?>
         </table>
-
+            <?php elseif ($activeTab == "aylikKarZarar"): ?>
         <h2>Aylık Kar/Zarar Tablosu</h2>
         <table id="aylikKarZararTablosu">
             <tr>
@@ -100,6 +102,7 @@ include "partials/header.php";
                 </tr>
             <?php endforeach; ?>
         </table>
+        <?php endif; ?>
     </div>
 </body>
 

@@ -15,6 +15,8 @@ foreach ($list as $item) {
     $toplamKarZarar += $item["kar_zarar"];
 }
 
+$activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'alisSatis';
+
 if (isset($_POST["ekle"])) {
     $hisseAdi = $_POST["hisseAdi"];
     $alisMaliyeti = $_POST["alisMaliyeti"];
