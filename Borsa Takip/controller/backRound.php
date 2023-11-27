@@ -12,11 +12,10 @@ $ay = date("F");
 $list = $model->hisseList();
 $row = $model->gunlukHisse2();
 
-$toplamKarZarar = 0;
+$toplamKarZarar = 00.00;
 foreach ($list as $item) {
-    $toplamKarZarar += floatval(str_replace(array('.', ','), '', $item["kar_zarar"]));
+    $toplamKarZarar += $item["kar_zarar"];
 }
-// $toplamKarZarar = number_format($toplamKarZarar, 2, ',');
 
 //Saat 18:30 olduğunda gerçekleşecek işlemler.
 //Her borsa kapanışında her hisseenin tekrar kayıdını alarak hisse bazlı kar ve zararı hesaplanır.
@@ -53,11 +52,7 @@ if ($islemZamanı == '18:30') {
         // data-last-price değerlerini al
         $guncelFiyat = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
 
-        // Gelen ondalıklı veriyi rakama çevirerek işlemi yapar. Ardından tekrar ondalık hale çevirir.
-        $guncelFiyatNumeric = floatval(str_replace(array(',', '.'), '', $guncelFiyat));
-        $alisMaliyetiNumeric = floatval(str_replace(array(',', '.'), '', $item["alis_maliyeti"]));
-        $karZarar = ($guncelFiyatNumeric - $alisMaliyetiNumeric) * $item["adet"];
-        $karZarar = number_format($karZarar, 2, ',', '.');
+        $karZarar = ($guncelFiyat - (float) $item["alis_maliyeti"]) * $item["adet"];
 
         $hisseBilgisi = [
             "value1" => $item["id"],
