@@ -14,13 +14,17 @@ $row = $model->gunlukHisse2();
 
 $toplamKarZarar = 0;
 foreach ($list as $item) {
-    $toplamKarZarar += $item["kar_zarar"];
+    $toplamKarZarar += floatval(str_replace(array('.', ','), '', $item["kar_zarar"]));
 }
+// $toplamKarZarar = number_format($toplamKarZarar, 2, ',');
 
 //Saat 18:30 olduğunda gerçekleşecek işlemler.
 //Her borsa kapanışında her hisseenin tekrar kayıdını alarak hisse bazlı kar ve zararı hesaplanır.
 //Her borsa kapanışında tüm hisselerin toplam kar ve zararını hesaplanır.
 $islemZamanı = $saat . ":" . $dk;
+
+// $islemZamanı = "18:30";
+
 if ($islemZamanı == '18:30') {
     foreach ($list as $item) {
         // Kullanıcının girdiği hisse adını al
@@ -44,21 +48,29 @@ if ($islemZamanı == '18:30') {
         $xpath = new DOMXPath($dom);
 
         // data-last-price değerlerini al
-        $satisFiyati = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
+        $guncelFiyat = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
 
         // Gelen ondalıklı veriyi rakama çevirerek işlemi yapar. Ardından tekrar ondalık hale çevirir.
-        $karZarar = (floatval(str_replace(array('.', ','), '', $satisFiyati)) - floatval(str_replace(array('.', ','), '', $item["alis_maliyeti"]))) * $item["adet"];
-        $karZarar = number_format($karZarar, 2, ',');
+        $guncelFiyatNumeric = floatval(str_replace(array(',', '.'), '', $guncelFiyat));
+        $alisMaliyetiNumeric = floatval(str_replace(array(',', '.'), '', $item["alis_maliyeti"]));
+        $karZarar = ($guncelFiyatNumeric - $alisMaliyetiNumeric) * $item["adet"];
+        $karZarar = number_format($karZarar, 2, ',', '.');
 
         $hisseBilgisi = [
             "value1" => $item["id"],
             "value2" => $item["alis_maliyeti"],
-            "value3" => $satisFiyati,
+            "value3" => $guncelFiyat,
             "value4" => $item["adet"],
             "value5" => $karZarar,
             "value6" => $ay,
         ];
         $model->gunlukHisse($hisseBilgisi);
+        $id = $item["id"];
+        $hisseBilgisi = [
+            "value1" => $guncelFiyat,
+            "value2" => $karZarar,
+        ];
+        $model->guncelleme1830($id, $hisseBilgisi);
     }
 
     $hisseBilgisi = [
