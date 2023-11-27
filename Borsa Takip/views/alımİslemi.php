@@ -16,10 +16,6 @@ include "partials/navbar.php";
             <input type="text" id="alisMaliyeti" name="alisMaliyeti">
             <?= $alisMaliyeti_Hata ?? "" ?><br>
 
-            <label for="satisFiyati">Güncel Fiyat:</label>
-            <input type="text" id="satisFiyati" name="satisFiyati">
-            <?= $satisFiyati_Hata ?? "" ?><br>
-
             <label for="adet">Adet:</label>
             <input type="number" id="adet" name="adet">
             <?= $Adet_Hata ?? "" ?><br>
