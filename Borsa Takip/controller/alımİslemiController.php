@@ -6,7 +6,6 @@ $model = new MODEL();
 if (isset($_POST["ekle"])) {
     $hisseAdi = trim($_POST["hisseAdi"]);
     $alisMaliyeti = trim($_POST["alisMaliyeti"]);
-    $satisFiyati = trim($_POST["satisFiyati"]);
     $adet = trim($_POST["adet"]);
 
     if (empty($hisseAdi)) {
@@ -17,23 +16,41 @@ if (isset($_POST["ekle"])) {
         $alisMaliyeti_Hata = '<p style="font-size: 13px; color: red;">Lütfen hisse maliyeti giriniz!</p>';
     }
 
-    if (empty($satisFiyati)) {
-        $satisFiyati_Hata = '<p style="font-size: 13px; color: red;">Lütfen güncel fiyat giriniz!</p>';
-    }
-
     if (empty($adet)) {
         $Adet_Hata = '<p style="font-size: 13px; color: red;">Lütfen adet giriniz!</p>';
     }
 
     //Tüm koşullar sağlanır ve hata oluşmaz ise ekleme işlemi gerçekleşir.
-    if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($satisFiyati_Hata) && empty($Adet_Hata)) {
-        $karZarar = (floatval(str_replace(array('.', ','), '', $satisFiyati)) - floatval(str_replace(array('.', ','), '', $item["alis_maliyeti"]))) * $adet;
-        $karZarar = number_format($karZarar, 2, ',');
+    if (empty($hisseAdi_Hata) && empty($alisMaliyeti_Hata) && empty($Adet_Hata)) {
+        // Formdan gelen veriyi içeren URL'yi oluştur
+        $url = "https://www.google.com/finance/quote/{$hisseAdi}:IST?hl=tr";
+
+        if (file_get_contents($url) !== null) {
+            $html = file_get_contents($url);
+        } else {
+            header("Location: index.php");
+        }
+
+        // DOMDocument ile HTML'i işlemeden önce uygun hale getirme
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+
+        $dom = new DOMDocument;
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html);
+        libxml_clear_errors();
+
+        // XPath nesnesini oluştur
+        $xpath = new DOMXPath($dom);
+
+        // data-last-price değerlerini al
+        $guncelFiyat = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
+
+        $karZarar = ($guncelFiyat - $item["alis_maliyeti"]) * $adet;
 
         $hisseBilgisi = [
             "value1" => $hisseAdi,
             "value2" => $alisMaliyeti,
-            "value3" => $satisFiyati,
+            "value3" => $guncelFiyat,
             "value4" => $adet,
             "value5" => $karZarar,
         ];
