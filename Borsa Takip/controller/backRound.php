@@ -23,7 +23,7 @@ foreach ($list as $item) {
 //Her borsa kapanışında tüm hisselerin toplam kar ve zararını hesaplanır.
 $islemZamanı = $saat . ":" . $dk;
 
-// $islemZamanı = "18:30";
+$islemZamanı = "18:30";
 
 if ($islemZamanı == '18:30') {
     foreach ($list as $item) {
@@ -33,8 +33,11 @@ if ($islemZamanı == '18:30') {
         // Formdan gelen veriyi içeren URL'yi oluştur
         $url = "https://www.google.com/finance/quote/{$stockSymbol}:IST?hl=tr";
 
-        // Formdan gelen veriyi içeren HTML'i çek
-        $html = file_get_contents($url);
+        if (file_get_contents($url) != null) {
+            $html = file_get_contents($url);
+        } else {
+            header("Location: index.php");
+        }
 
         // DOMDocument ile HTML'i işlemeden önce uygun hale getirme
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
