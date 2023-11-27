@@ -86,9 +86,11 @@ if ($islemZamanı == '18:30') {
 if ($gün == 1) {
     $aylıkHesapama = $model->aylıkHesaplama($ay);
 
+    $aylıkKarZarar = 0;
     foreach ($aylıkHesapama as $item) {
-        $aylıkKarZarar += $item["kar_zarar"];
+        $aylıkKarZarar += floatval(str_replace(array(',', '.'), '', $item["kar_zarar"]));
     }
+    $aylıkKarZarar = number_format($aylıkKarZarar, 2, ',', '.');
 
     $hisseBilgisi = [
         "value1" => $ay,
