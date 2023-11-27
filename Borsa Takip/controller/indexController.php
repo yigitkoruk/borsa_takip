@@ -5,6 +5,11 @@ $model = new MODEL();
 $list = $model->hisseList();
 $row = $model->gunlukHisse2();
 
+$toplamKarZarar = 0;
+foreach ($list as $item) {
+    $toplamKarZarar += $item["kar_zarar"];
+}
+
 //Sat butonuna tıklandığında.
 if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {

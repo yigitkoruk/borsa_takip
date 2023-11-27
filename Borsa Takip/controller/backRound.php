@@ -12,7 +12,7 @@ $ay = date("F");
 $list = $model->hisseList();
 $row = $model->gunlukHisse2();
 
-$toplamKarZarar = 0;
+$toplamKarZarar = 00.00;
 foreach ($list as $item) {
     $toplamKarZarar += $item["kar_zarar"];
 }
@@ -21,6 +21,9 @@ foreach ($list as $item) {
 //Her borsa kapanışında her hisseenin tekrar kayıdını alarak hisse bazlı kar ve zararı hesaplanır.
 //Her borsa kapanışında tüm hisselerin toplam kar ve zararını hesaplanır.
 $islemZamanı = $saat . ":" . $dk;
+
+$islemZamanı = "18:30";
+
 if ($islemZamanı == '18:30') {
     foreach ($list as $item) {
         // Kullanıcının girdiği hisse adını al
@@ -29,8 +32,11 @@ if ($islemZamanı == '18:30') {
         // Formdan gelen veriyi içeren URL'yi oluştur
         $url = "https://www.google.com/finance/quote/{$stockSymbol}:IST?hl=tr";
 
-        // Formdan gelen veriyi içeren HTML'i çek
-        $html = file_get_contents($url);
+        if (file_get_contents($url) != null) {
+            $html = file_get_contents($url);
+        } else {
+            header("Location: index.php");
+        }
 
         // DOMDocument ile HTML'i işlemeden önce uygun hale getirme
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
@@ -44,21 +50,25 @@ if ($islemZamanı == '18:30') {
         $xpath = new DOMXPath($dom);
 
         // data-last-price değerlerini al
-        $satisFiyati = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
+        $guncelFiyat = $xpath->query('//div[@data-last-price]')->item(0)->getAttribute('data-last-price');
 
-        // Gelen ondalıklı veriyi rakama çevirerek işlemi yapar. Ardından tekrar ondalık hale çevirir.
-        $karZarar = (floatval(str_replace(array('.', ','), '', $satisFiyati)) - floatval(str_replace(array('.', ','), '', $item["alis_maliyeti"]))) * $item["adet"];
-        $karZarar = number_format($karZarar, 2, ',');
+        $karZarar = ($guncelFiyat - (float) $item["alis_maliyeti"]) * $item["adet"];
 
         $hisseBilgisi = [
             "value1" => $item["id"],
             "value2" => $item["alis_maliyeti"],
-            "value3" => $satisFiyati,
+            "value3" => $guncelFiyat,
             "value4" => $item["adet"],
             "value5" => $karZarar,
             "value6" => $ay,
         ];
         $model->gunlukHisse($hisseBilgisi);
+        $id = $item["id"];
+        $hisseBilgisi = [
+            "value1" => $guncelFiyat,
+            "value2" => $karZarar,
+        ];
+        $model->guncelleme1830($id, $hisseBilgisi);
     }
 
     $hisseBilgisi = [
@@ -74,9 +84,11 @@ if ($islemZamanı == '18:30') {
 if ($gün == 1) {
     $aylıkHesapama = $model->aylıkHesaplama($ay);
 
+    $aylıkKarZarar = 0;
     foreach ($aylıkHesapama as $item) {
-        $aylıkKarZarar += $item["kar_zarar"];
+        $aylıkKarZarar += floatval(str_replace(array(',', '.'), '', $item["kar_zarar"]));
     }
+    $aylıkKarZarar = number_format($aylıkKarZarar, 2, ',', '.');
 
     $hisseBilgisi = [
         "value1" => $ay,

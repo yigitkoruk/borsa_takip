@@ -212,4 +212,19 @@ class model
             return array();
         }
     }
+
+    public function guncelleme1830($id, $hisseBilgisi)
+    {
+        try {
+            $stmt = $this->connect->prepare("UPDATE hisseler SET guncel_fiyat = :value1, kar_zarar = :value2 WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':value1', $hisseBilgisi['value1']);
+            $stmt->bindParam(':value2', $hisseBilgisi['value2']);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
 }
