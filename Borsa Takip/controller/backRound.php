@@ -21,9 +21,6 @@ foreach ($list as $item) {
 //Her borsa kapanışında her hisseenin tekrar kayıdını alarak hisse bazlı kar ve zararı hesaplanır.
 //Her borsa kapanışında tüm hisselerin toplam kar ve zararını hesaplanır.
 $islemZamanı = $saat . ":" . $dk;
-
-$islemZamanı = "18:30";
-
 if ($islemZamanı == '18:30') {
     foreach ($list as $item) {
         // Kullanıcının girdiği hisse adını al
@@ -32,7 +29,7 @@ if ($islemZamanı == '18:30') {
         // Formdan gelen veriyi içeren URL'yi oluştur
         $url = "https://www.google.com/finance/quote/{$stockSymbol}:IST?hl=tr";
 
-        if (file_get_contents($url) != null) {
+        if (file_get_contents($url) !== null) {
             $html = file_get_contents($url);
         } else {
             header("Location: index.php");
@@ -86,7 +83,7 @@ if ($gün == 1) {
 
     $aylıkKarZarar = 0;
     foreach ($aylıkHesapama as $item) {
-        $aylıkKarZarar += floatval(str_replace(array(',', '.'), '', $item["kar_zarar"]));
+        $aylıkKarZarar += (float) $item["kar_zarar"];
     }
     $aylıkKarZarar = number_format($aylıkKarZarar, 2, ',', '.');
 
