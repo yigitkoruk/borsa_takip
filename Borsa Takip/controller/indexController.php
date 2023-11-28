@@ -1,6 +1,7 @@
 <?php
 include "backRound.php";
 include_once "../models/model.php";
+session_start();
 $model = new MODEL();
 $list = $model->hisseList();
 $row = $model->gunlukHisse2();
@@ -13,10 +14,8 @@ foreach ($list as $item) {
 //Sat butonuna tıklandığında.
 if (isset($_POST["sat"])) {
     if ($_POST["checkbox"] == TRUE) {
-        $id = $_POST["hidden"];
-
-        $model->hisseSat($id);
-        header("Location: index.php");
+        $_SESSION["id"] = $_POST["hidden"];
+        header("Location: sat.php");
     } else {
         $_POST["checkbox"] == false;
         header("Location: index.php");
