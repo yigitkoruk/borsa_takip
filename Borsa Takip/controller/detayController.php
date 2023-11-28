@@ -10,8 +10,8 @@ $hisseKarZarar = $model->hisseKarZarar($id);
 //Güncelle butonuna basıldığında.
 if (isset($_POST["guncelle"])) {
     $hisseAdi = $_POST["hisseAdi"] ?? "";
-    $alisMaliyeti = $_POST["alisMaliyeti"] ?? "";
-    $satisFiyati = $_POST["satisFiyati"] ?? "";
+    $alisMaliyeti = str_replace(',', '.', $_POST["alisMaliyeti"]) ?? "";
+    $satisFiyati = str_replace(',', '.', $_POST["satisFiyati"]) ?? "";
     $adet = $_POST["adet"] ?? "";
 
     if (empty($hisseAdi)) {

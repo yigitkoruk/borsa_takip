@@ -5,7 +5,7 @@ $model = new MODEL();
 //Ekle butonuna tıklandığında.
 if (isset($_POST["ekle"])) {
     $hisseAdi = trim($_POST["hisseAdi"]);
-    $alisMaliyeti = trim($_POST["alisMaliyeti"]);
+    $alisMaliyeti = trim(str_replace(',', '.', $_POST["alisMaliyeti"]));
     $adet = trim($_POST["adet"]);
 
     if (empty($hisseAdi)) {
