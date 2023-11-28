@@ -48,11 +48,13 @@ class model
         }
     }
 
-    public function hisseSat($id)
+    public function hisseSat($id, $hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("UPDATE hisseler SET islem_durumu = False WHERE id = :id");
+            $stmt = $this->connect->prepare("UPDATE hisseler SET guncel_fiyat = :value1, kar_zarar = :value2, islem_durumu = false WHERE id = :id");
             $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':value1', $hisseBilgisi['value1']);
+            $stmt->bindParam(':value2', $hisseBilgisi['value2']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {

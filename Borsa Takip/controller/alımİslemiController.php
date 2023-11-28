@@ -25,7 +25,7 @@ if (isset($_POST["ekle"])) {
         // Formdan gelen veriyi içeren URL'yi oluştur
         $url = "https://www.google.com/finance/quote/{$hisseAdi}:IST?hl=tr";
 
-        if (file_get_contents($url) !== null) {
+        if ($url !== null) {
             $html = file_get_contents($url);
         } else {
             header("Location: index.php");
