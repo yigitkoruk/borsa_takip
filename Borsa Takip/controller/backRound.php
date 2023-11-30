@@ -78,7 +78,6 @@ if ($islemZamanı == '18:30') {
 
 //Ayın 1. günü gerçekleşecek işlemler.
 //Her işlem gerçekleştiğinde ay koşulu sağlanarak günlük kar ve zararları hesaplayarak aylık kar ve zararlar hesaplanır.
-$gün = 1;
 if ($gün == 1) {
     $oncekiAy = [
         "January"   => "December",
