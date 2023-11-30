@@ -79,6 +79,21 @@ if ($islemZamanı == '18:30') {
 //Ayın 1. günü gerçekleşecek işlemler.
 //Her işlem gerçekleştiğinde ay koşulu sağlanarak günlük kar ve zararları hesaplayarak aylık kar ve zararlar hesaplanır.
 if ($gün == 1) {
+    $oncekiAy = [
+        "January"   => "December",
+        "February"  => "January",
+        "March"     => "February",
+        "April"     => "March",
+        "May"       => "April",
+        "June"      => "May",
+        "July"      => "June",
+        "August"    => "July",
+        "September" => "August",
+        "October"   => "September",
+        "November"  => "October",
+        "December"  => "November"
+    ];
+    $ay = $oncekiAy[$ay];
     $aylıkHesapama = $model->aylıkHesaplama($ay);
 
     $aylıkKarZarar = 0;

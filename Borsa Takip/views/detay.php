@@ -30,14 +30,12 @@ include "partials/header.php";
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Gün</th>
                     <th>Kar/Zarar</th>
                 </tr>
             </thead>
             <?php foreach ($hisseKarZarar as $hisse) : ?>
                 <tr>
-                    <td><?= $hisse["id"] ?? "" ?></td>
                     <td><?= $hisse["gun"] ?? "" ?></td>
                     <td><?= $hisse["kar_zarar"] ?? "" ?></td>
                 </tr>
