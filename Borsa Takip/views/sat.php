@@ -10,6 +10,8 @@ include "partials/navbar.php";
         <form id="borsaForm" method="POST">
             <label for="satisFiyati">Fiyat:</label>
             <input type="text" id="satisFiyati" name="satisFiyati">
+            <label for="satisFiyati">Adet:</label>
+            <input type="number" id="satisAdet" name="satisAdet">
             <?= $satisFiyati_Hata ?? "" ?><br>
 
             <input type="submit" name="sat" value="Sat">

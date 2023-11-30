@@ -51,7 +51,7 @@ class model
     public function hisseSat($id, $hisseBilgisi)
     {
         try {
-            $stmt = $this->connect->prepare("UPDATE hisseler SET guncel_fiyat = :value1, kar_zarar = :value2, islem_durumu = false WHERE id = :id");
+            $stmt = $this->connect->prepare("UPDATE hisseler SET adet = :value1, islem_durumu = :value2 WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->bindParam(':value2', $hisseBilgisi['value2']);
@@ -222,6 +222,23 @@ class model
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':value1', $hisseBilgisi['value1']);
             $stmt->bindParam(':value2', $hisseBilgisi['value2']);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function satımIslemi($hisseBilgisi)
+    {
+        try {
+            $stmt = $this->connect->prepare("INSERT INTO satılanlar (hisse_id, alım_maliyeti, satis_fiyati, adet, kar_zarar) VALUES (:value1, :value2, :value3, :value4, :value5)");
+            $stmt->bindParam(':value1', $hisseBilgisi['value1']);
+            $stmt->bindParam(':value2', $hisseBilgisi['value2']);
+            $stmt->bindParam(':value3', $hisseBilgisi['value3']);
+            $stmt->bindParam(':value4', $hisseBilgisi['value4']);
+            $stmt->bindParam(':value5', $hisseBilgisi['value5']);
             $stmt->execute();
             return true;
         } catch (\PDOException $e) {
