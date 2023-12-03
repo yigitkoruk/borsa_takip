@@ -28,3 +28,5 @@ if (isset($_POST["detay"])) {
     $_SESSION["id"] = $_POST["hidden"];
     header("Location: detay.php");
 }
+
+include "../views/partials/contents/pörtföyContents.php";
