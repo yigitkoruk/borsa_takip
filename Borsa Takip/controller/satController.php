@@ -36,3 +36,5 @@ if (isset($_POST["sat"])) {
         header("Location: index.php");
     }
 }
+
+include "../views/partials/contents/satContents.php";

@@ -52,3 +52,6 @@ if (isset($_POST["guncelle"])) {
         }
     }
 }
+
+
+include "../views/partials/contents/detayContents.php";

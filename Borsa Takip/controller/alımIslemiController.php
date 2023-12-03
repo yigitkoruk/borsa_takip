@@ -58,3 +58,5 @@ if (isset($_POST["ekle"])) {
         header("Location: index.php");
     }
 }
+
+include "../views/partials/contents/alımİslemiContents.php";
